@@ -8,9 +8,9 @@ Currently it only outputs to the command prompt.
 
 Example in Visual Studio using MSBuild.
 
-![](doc/img/VSBuildOutput.png)
+![](doc/img/VSBuildOutput.PNG)
 
 Exmaple in Dotnet core CLI.
 
-![](doc/img/DotnetCLIBuildTimeOutput.png)
+![](doc/img/DotnetCLIBuildTimeOutput.PNG)
 
