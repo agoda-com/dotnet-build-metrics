@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29519.87
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Agoda.Builds.Metrics", "Agoda.Builds.Metrics\Agoda.Builds.Metrics.csproj", "{C3544846-AB2C-49F4-94DD-E4F17DCC1C92}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C3544846-AB2C-49F4-94DD-E4F17DCC1C92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3544846-AB2C-49F4-94DD-E4F17DCC1C92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3544846-AB2C-49F4-94DD-E4F17DCC1C92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3544846-AB2C-49F4-94DD-E4F17DCC1C92}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {73C67BA4-C728-4B91-8908-F0E3D06C7870}
+	EndGlobalSection
+EndGlobal
