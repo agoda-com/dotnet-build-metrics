@@ -36,7 +36,7 @@ namespace Agoda.Builds.Metrics
                 using (var httpClient = new HttpClient())
                 {
                     httpClient.Timeout = TimeSpan.FromMilliseconds(100);
-                    httpClient.BaseAddress = new Uri("http://build-mertics");
+                    httpClient.BaseAddress = new Uri("http://localhost:3000");
                     var data = new
                     {
                         username = Environment.UserName,
@@ -48,7 +48,7 @@ namespace Agoda.Builds.Metrics
                         gitBranch
                     };
                     var content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
-                    var response = httpClient.PostAsync("/api/buildmetric/track", content).Result;
+                    var response = httpClient.PostAsync("/metrics", content).Result;
                     if (!response.IsSuccessStatusCode)
                     {
                         Log.LogError(response.ReasonPhrase);

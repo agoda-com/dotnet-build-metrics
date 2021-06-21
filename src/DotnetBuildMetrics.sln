@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29519.87
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Agoda.Builds.Metrics", "Agoda.Builds.Metrics\Agoda.Builds.Metrics.csproj", "{C3544846-AB2C-49F4-94DD-E4F17DCC1C92}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Agoda.Builds.Metrics", "Agoda.Builds.Metrics\Agoda.Builds.Metrics.csproj", "{C3544846-AB2C-49F4-94DD-E4F17DCC1C92}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp2", "ConsoleApp2\ConsoleApp2.csproj", "{5E9E8E0B-3E4F-4B3A-9ECC-0E7D75EAE33C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp3", "ConsoleApp3\ConsoleApp3.csproj", "{FEADD0DF-2A4C-452F-A8DD-8DF16003DAEF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{C3544846-AB2C-49F4-94DD-E4F17DCC1C92}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C3544846-AB2C-49F4-94DD-E4F17DCC1C92}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C3544846-AB2C-49F4-94DD-E4F17DCC1C92}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E9E8E0B-3E4F-4B3A-9ECC-0E7D75EAE33C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E9E8E0B-3E4F-4B3A-9ECC-0E7D75EAE33C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E9E8E0B-3E4F-4B3A-9ECC-0E7D75EAE33C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E9E8E0B-3E4F-4B3A-9ECC-0E7D75EAE33C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FEADD0DF-2A4C-452F-A8DD-8DF16003DAEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEADD0DF-2A4C-452F-A8DD-8DF16003DAEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEADD0DF-2A4C-452F-A8DD-8DF16003DAEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEADD0DF-2A4C-452F-A8DD-8DF16003DAEF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
