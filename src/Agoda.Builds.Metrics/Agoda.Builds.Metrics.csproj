@@ -9,14 +9,14 @@
     <BuildOutputTargetFolder>tasks</BuildOutputTargetFolder>
   </PropertyGroup>
   <ItemGroup>
+    <!-- ensure nuspec doesn't contain any package references as we bundle their assemblies in our package -->
+    <PackageReference Update="@(PackageReference)" PrivateAssets="All" />
     <PackageReference Include="LibGit2Sharp" />
     <PackageReference Include="Microsoft.Build.Framework" Version="15.1.1012" />
     <PackageReference Include="Microsoft.Build.Utilities.Core" Version="15.1.1012" />
     <PackageReference Include="Newtonsoft.Json" />
     <PackageReference Include="RestSharp" />
     <PackageReference Include="System.Net.Http" />
-    <!-- marks all packages as 'local only' so they don't end up in the nuspec -->
-    <PackageReference Update="@(PackageReference)" PrivateAssets="All" />
     <PackageReference Update="libgit2sharp" Version="0.27.0-preview-0100" />
     <PackageReference Update="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Update="RestSharp" Version="106.11.7" />
@@ -26,5 +26,23 @@
   <ItemGroup>
     <None Include="build\**" Pack="True" PackagePath="build\" />
   </ItemGroup>
+
+<!-- 
+    Copy dependencies into the tools/$(TargetFramework)/ package folders.
+    MSBuild does not resolve task runtime dependencies from PackageReference
+  -->
+  <Target Name="PackTaskDependencies" BeforeTargets="GenerateNuspec">
+    <!--
+    The include needs to happen after output has been copied to build output folder
+    but before NuGet generates a nuspec.
+    -->
+    <ItemGroup>
+      <_PackageFiles Include="bin\$(Configuration)\*\*.dll;bin\$(Configuration)\*\lib\*\*.*">
+        <PackagePath>tasks\%(RecursiveDir)</PackagePath>
+        <Visible>false</Visible>
+        <BuildAction>Content</BuildAction>
+      </_PackageFiles>
+    </ItemGroup>
+  </Target>
 
 </Project>
