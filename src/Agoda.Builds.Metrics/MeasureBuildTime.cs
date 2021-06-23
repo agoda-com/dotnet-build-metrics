@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
+using System.Net.Http;
+using System.Text;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
-using Newtonsoft.Json;
-using RestSharp;
 
+using System.Text.Json;
 namespace Agoda.Builds.Metrics
 {
     public class MeasureBuildTime : Task
@@ -18,12 +20,6 @@ namespace Agoda.Builds.Metrics
             DebugOutput = (DateTime.Parse(EndDateTime) - DateTime.Parse(StartDateTime)).TotalMilliseconds.ToString();
             try
             {
-                var currentPath = Environment.CurrentDirectory;
-                while (!RepositoryInformation.isValidPath(currentPath))
-                {
-                    currentPath = Path.GetFullPath(Path.Combine(currentPath, @"../"));
-                }
-                var repositoryInformation = RepositoryInformation.GetRepositoryInformation(currentPath);
                 var data = new
                 {
                     id = Guid.NewGuid(),
@@ -33,19 +29,24 @@ namespace Agoda.Builds.Metrics
                     platform = Environment.OSVersion.Platform,
                     os = Environment.OSVersion.VersionString,
                     timeTaken = DebugOutput,
-                    branch = repositoryInformation.BranchName,
+                    branch = GetGitDetails("rev-parse --abbrev-ref HEAD"),
                     type = ".Net",
-                    repository = repositoryInformation.Origin,
+                    repository = GetGitDetails("config --get remote.origin.url"),
                     date = DateTime.UtcNow
                 };
-                var client = new RestClient("http://backend-elasticsearch.agoda.local:9200/build-metrics/_doc/?pretty");
-                client.Timeout = -1;
-                var request = new RestRequest(Method.POST);
-                request.AddHeader("Content-Type", "application/json");
 
-                request.AddParameter("application/json", JsonConvert.SerializeObject(data), ParameterType.RequestBody);
-                IRestResponse response = client.Execute(request);
-                Console.WriteLine(response.Content);
+                using (var httpClient = new HttpClient())
+                {
+                    httpClient.Timeout = TimeSpan.FromMinutes(1);
+                    httpClient.BaseAddress = new Uri("http://backend-elasticsearch:9200");
+                    var content = new StringContent(JsonSerializer.Serialize(data), Encoding.UTF8, "application/json");
+                    var responses = httpClient.PostAsync("/build-metrics/_doc", content).Result;
+                    Console.WriteLine(responses.ReasonPhrase);
+                    if (!responses.IsSuccessStatusCode)
+                    {
+                       Log.LogError(responses.ReasonPhrase);
+                    }
+                }
 
             }
             catch (Exception ex)
@@ -54,6 +55,24 @@ namespace Agoda.Builds.Metrics
             }
 
             return true;
+        }
+
+        private static string GetGitDetails(string arg)
+        {
+            ProcessStartInfo startInfo = new ProcessStartInfo("git.exe");
+
+            startInfo.UseShellExecute = false;
+            startInfo.WorkingDirectory = Environment.CurrentDirectory;
+            startInfo.RedirectStandardInput = true;
+            startInfo.RedirectStandardOutput = true;
+            startInfo.Arguments = "rev-parse --abbrev-ref HEAD";
+
+            Process process = new Process();
+            process.StartInfo = startInfo;
+            process.Start();
+
+            var gitBranch = process.StandardOutput.ReadLine();
+            return gitBranch;
         }
     }
 }
