@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - test-branch
+      - remove-all-ext-lib
 env:
   NETCORE_VERSION: '3.1.402'
   GIT_REPO_ROOT: src
@@ -11,7 +11,7 @@ env:
   DOTNET_ROLL_FORWARD_ON_NO_CANDIDATE_FX: 2
   RUNTIME: centos.7-x64
   GH_TOKEN: ${{ secrets.GH_TOKEN }}
-  KLONDIKE_API_KEY: ${{ secrets.KLONDIKE_API_KEY }}
+  KLONDIKE_API_KEY: ${{ secrets.NUGET_API_KEY }}
 jobs: 
 
   publish:
@@ -44,4 +44,4 @@ jobs:
 
     - name: Push to NuGet
       working-directory: ${{ env.GIT_REPO_ROOT }}/Agoda.Builds.Metrics/finalpackage
-      run: dotnet nuget push ./finalpackage/Agoda.Builds.Metrics.${{ env.NUGET_VERSION }}.nupkg -k ${{ secrets.KLONDIKE_API_KEY }} -s https://bk-lib-nuget.agodadev.io/api/odata --skip-duplicate
+      run: dotnet nuget push ./finalpackage/Agoda.Builds.Metrics.${{ env.NUGET_VERSION }}.nupkg  --api-key ${{ env.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json --skip-duplicate

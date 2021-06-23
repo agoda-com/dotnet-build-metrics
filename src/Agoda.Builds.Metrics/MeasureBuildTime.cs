@@ -38,10 +38,11 @@ namespace Agoda.Builds.Metrics
                 using (var httpClient = new HttpClient())
                 {
                     httpClient.Timeout = TimeSpan.FromMinutes(1);
-                    httpClient.BaseAddress = new Uri("http://backend-elasticsearch:9200");
+                    string uriString = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("url")) ? Environment.GetEnvironmentVariable("url") : "http://backend-elasticsearch:9200";
+                    string index = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("index")) ? Environment.GetEnvironmentVariable("index") : "build-metrics";
+                    httpClient.BaseAddress = new Uri(uriString);
                     var content = new StringContent(JsonSerializer.Serialize(data), Encoding.UTF8, "application/json");
-                    var responses = httpClient.PostAsync("/build-metrics/_doc", content).Result;
-                    Console.WriteLine(responses.ReasonPhrase);
+                    var responses = httpClient.PostAsync($"/{index}/_doc", content).Result;
                     if (!responses.IsSuccessStatusCode)
                     {
                        Log.LogError(responses.ReasonPhrase);
