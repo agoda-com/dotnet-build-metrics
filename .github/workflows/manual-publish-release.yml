@@ -44,4 +44,4 @@ jobs:
 
     - name: Push to NuGet
       working-directory: ${{ env.GIT_REPO_ROOT }}/Agoda.Builds.Metrics/finalpackage
-      run: dotnet nuget push ./finalpackage/Agoda.Builds.Metrics.${{ env.NUGET_VERSION }}.nupkg  --api-key ${{ env.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json --skip-duplicate
+      run: dotnet nuget push ./finalpackage/Agoda.Builds.Metrics.${{ env.NUGET_VERSION }}.nupkg  --api-key ${{ env.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
