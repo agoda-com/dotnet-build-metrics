@@ -4,9 +4,8 @@ on:
       - test-branch
 env:
   NETCORE_VERSION: '3.1.402'
-  GIT_REPO_ROOT: ./framework
+  GIT_REPO_ROOT: src
   MAJOR_MINOR_VERSION: 0.1.
-  SOLUTION_PATH: src
   SOLUTION_FILE: DotnetBuildMetrics.sln
   PROJECT_FILE: Agoda.Builds.Metrics.csproj
   DOTNET_ROLL_FORWARD_ON_NO_CANDIDATE_FX: 2
