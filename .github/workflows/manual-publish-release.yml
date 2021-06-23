@@ -1,0 +1,48 @@
+on:
+  push:
+    branches:
+      - test-branch
+env:
+  NETCORE_VERSION: '3.1.402'
+  GIT_REPO_ROOT: ./framework
+  MAJOR_MINOR_VERSION: 0.1.
+  SOLUTION_PATH: src
+  SOLUTION_FILE: DotnetBuildMetrics.sln
+  PROJECT_FILE: Agoda.Builds.Metrics.csproj
+  DOTNET_ROLL_FORWARD_ON_NO_CANDIDATE_FX: 2
+  RUNTIME: centos.7-x64
+  GH_TOKEN: ${{ secrets.GH_TOKEN }}
+  KLONDIKE_API_KEY: ${{ secrets.KLONDIKE_API_KEY }}
+jobs: 
+
+  publish:
+    name: Publish Nuget   
+    runs-on: [self-hosted, linux, x64]
+    steps: 
+    - uses: actions/checkout@v2 
+    - name: Set version ${{ env.MAJOR_MINOR_VERSION }}${{ github.run_number }}
+      id: set-version 
+      run: echo "NUGET_VERSION=${{ env.MAJOR_MINOR_VERSION }}${{ github.run_number }}" >> $GITHUB_ENV 
+    - name: Setup .NET Core SDK ${{ env.NETCORE_VERSION }}
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: ${{ env.NETCORE_VERSION }}
+    - name: Build Version
+      run: |
+        echo "NugetVersion: ${{ env.NUGET_VERSION }}"
+       
+    - name: Restore packages
+      working-directory: ${{ env.GIT_REPO_ROOT }}
+      run: dotnet restore ${{ env.SOLUTION_FILE }}
+      
+    - name: Build library
+      working-directory: ${{ env.GIT_REPO_ROOT }}
+      run: dotnet build ${{ env.SOLUTION_FILE }} --configuration Release --no-restore
+
+    - name:  Pack
+      working-directory: ${{ env.GIT_REPO_ROOT }}/Agoda.Builds.Metrics
+      run: dotnet pack --configuration Release -o finalpackage --no-build --include-symbols --include-source -p:PackageVersion=${{ env.NUGET_VERSION }} -p:Version=${{ env.NUGET_VERSION }}
+
+    - name: Push to NuGet
+      working-directory: ${{ env.GIT_REPO_ROOT }}/Agoda.Builds.Metrics/finalpackage
+      run: dotnet nuget push ./finalpackage/Agoda.Builds.Metrics.${{ env.NUGET_VERSION }}.nupkg -k ${{ secrets.KLONDIKE_API_KEY }} -s https://bk-lib-nuget.agodadev.io/api/odata --skip-duplicate
