@@ -18,7 +18,11 @@
   </Target>
 
   <Target Name="ExecuteMeasurement" BeforeTargets="PostBuildEvent">
-    <Agoda.Builds.Metrics.MeasureBuildTime StartDateTime="$(StartTime)" EndDateTime="$([System.DateTime]::Now.ToString(&quot;yyyy-MM-dd HH:mm:ss.ffffzzz&quot;))">
+    <Agoda.Builds.Metrics.MeasureBuildTime
+	  StartDateTime="$(StartTime)" 
+	  EndDateTime="$([System.DateTime]::Now.ToString(&quot;yyyy-MM-dd HH:mm:ss.ffffzzz&quot;))"
+	  ProjectName="$(MSBuildProjectName)"
+	  >
       <Output PropertyName="BuildTime" TaskParameter="DebugOutput" /> 
     </Agoda.Builds.Metrics.MeasureBuildTime>
     <Message Text="The Build Time was $(BuildTime) ms" Importance="High" />

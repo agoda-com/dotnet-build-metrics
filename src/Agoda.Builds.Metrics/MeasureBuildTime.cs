@@ -13,6 +13,7 @@ namespace Agoda.Builds.Metrics
     {
         public string StartDateTime { get; set; }
         public string EndDateTime { get; set; }
+        public string ProjectName { get; set; }
         [Output]
         public string DebugOutput { get; set; }
         public override bool Execute()
@@ -31,6 +32,7 @@ namespace Agoda.Builds.Metrics
                     timeTaken = DebugOutput,
                     branch = GetGitDetails("rev-parse --abbrev-ref HEAD"),
                     type = ".Net",
+                    projectName = ProjectName,
                     repository = GetGitDetails("config --get remote.origin.url"),
                     date = DateTime.UtcNow
                 };
