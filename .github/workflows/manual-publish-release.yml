@@ -62,7 +62,7 @@ jobs:
       - name: Setup NuGet
         uses: NuGet/setup-nuget@v1.0.5
         with:
-          nuget-api-key: ${{ secrets.NUGET_API_KEY }}
+          nuget-api-key: ${{ secrets.KLONDIKE_API_KEY }}
           nuget-version: latest
 
       - name: Setup .NET Core SDK
@@ -71,4 +71,4 @@ jobs:
           dotnet-version: ${{ env.NETCORE_VERSION }}
 
       - name: Push to NuGet
-        run: dotnet nuget push nupkg/**/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://nuget.org --skip-duplicate
+        run: dotnet nuget push nupkg/**/*.nupkg -k ${{ secrets.KLONDIKE_API_KEY  }} -s https://bk-lib-nuget.agodadev.io/api/odata --skip-duplicate
