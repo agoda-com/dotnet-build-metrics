@@ -71,4 +71,4 @@ jobs:
           dotnet-version: ${{ env.NETCORE_VERSION }}
 
       - name: Push to NuGet
-        run: dotnet nuget push nupkg/**/*.nupkg -k ${{ secrets.KLONDIKE_API_KEY  }} -s https://bk-lib-nuget.agodadev.io/api/odata --skip-duplicate
+        run: dotnet nuget push nupkg/**/*.nupkg -k ${{ secrets.KLONDIKE_API_KEY  }} -s https://bk-lib-nuget.agodadev.io/api/packages --skip-duplicate
