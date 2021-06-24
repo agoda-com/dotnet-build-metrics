@@ -66,7 +66,7 @@ namespace Agoda.Builds.Metrics
             startInfo.WorkingDirectory = Environment.CurrentDirectory;
             startInfo.RedirectStandardInput = true;
             startInfo.RedirectStandardOutput = true;
-            startInfo.Arguments = "rev-parse --abbrev-ref HEAD";
+            startInfo.Arguments = arg;
 
             Process process = new Process();
             process.StartInfo = startInfo;
