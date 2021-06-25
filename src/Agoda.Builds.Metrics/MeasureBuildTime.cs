@@ -47,14 +47,14 @@ namespace Agoda.Builds.Metrics
                     var responses = httpClient.PostAsync($"/{index}/_doc", content).Result;
                     if (!responses.IsSuccessStatusCode)
                     {
-                       Log.LogError(responses.ReasonPhrase);
+                       Log.LogMessage($"Unable to publish metrics - {responses.ReasonPhrase}");
                     }
                 }
 
             }
             catch (Exception ex)
             {
-                Log.LogError(ex.Message);
+                Log.LogMessage($"Unexpected issue while generating metrics - {ex.Message}");
             }
 
             return true;
@@ -62,7 +62,10 @@ namespace Agoda.Builds.Metrics
 
         private static string GetGitDetails(string arg)
         {
-            ProcessStartInfo startInfo = new ProcessStartInfo("git.exe");
+            string executableName = "git";
+            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+                executableName += ".exe";
+            ProcessStartInfo startInfo = new ProcessStartInfo(executableName);
 
             startInfo.UseShellExecute = false;
             startInfo.WorkingDirectory = Environment.CurrentDirectory;
