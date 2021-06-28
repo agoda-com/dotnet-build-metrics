@@ -16,6 +16,7 @@ namespace Agoda.Builds.Metrics
         public string ProjectName { get; set; }
         [Output]
         public string DebugOutput { get; set; }
+
         public override bool Execute()
         {
             DebugOutput = (DateTime.Parse(EndDateTime) - DateTime.Parse(StartDateTime)).TotalMilliseconds.ToString();
@@ -24,6 +25,7 @@ namespace Agoda.Builds.Metrics
                 var data = new
                 {
                     id = Guid.NewGuid(),
+                    metricsVersion = typeof(MeasureBuildTime).Assembly.GetName().Version.ToString(),
                     userName = Environment.UserName,
                     cpuCount = Environment.ProcessorCount,
                     hostname = Environment.MachineName,
