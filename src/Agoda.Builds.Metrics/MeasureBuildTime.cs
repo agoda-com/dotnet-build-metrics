@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Diagnostics;
-using System.IO;
 using System.Net.Http;
 using System.Text;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 
-using System.Text.Json;
+using Newtonsoft.Json;
+
 namespace Agoda.Builds.Metrics
 {
     public class MeasureBuildTime : Task
@@ -45,7 +45,7 @@ namespace Agoda.Builds.Metrics
                     string uriString = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("url")) ? Environment.GetEnvironmentVariable("url") : "http://backend-elasticsearch:9200";
                     string index = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("index")) ? Environment.GetEnvironmentVariable("index") : "build-metrics";
                     httpClient.BaseAddress = new Uri(uriString);
-                    var content = new StringContent(JsonSerializer.Serialize(data), Encoding.UTF8, "application/json");
+                    var content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
                     var responses = httpClient.PostAsync($"/{index}/_doc", content).Result;
                     if (!responses.IsSuccessStatusCode)
                     {
