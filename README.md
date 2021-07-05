@@ -35,8 +35,6 @@ string index = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("index")
  ```
 Note that the version number is embedded in the path, if you upgrade the library you have to update all of the project files as well.
 
-Grafana dashboard for data visualization:
-http://grafana.agoda.local/d/bUtx5Zk7k/net-local-build-analysis?orgId=1&refresh=5s
 
 
 Example in Visual Studio using MSBuild.
