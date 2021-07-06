@@ -82,8 +82,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: release
-        release_name: release
+        tag_name: ${{ env.MAJOR_MINOR_VERSION }}${{ github.run_number }}
+        release_name: ${{ env.MAJOR_MINOR_VERSION }}${{ github.run_number }}
         draft: true
         prerelease: false
 
