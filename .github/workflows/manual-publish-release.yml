@@ -74,7 +74,7 @@ jobs:
       #   run: dotnet nuget push nupkg/**/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://nuget.org --skip-duplicate
   
   Release:
-    needs: deploy
+    # needs: deploy
     name: Version and Release 
     runs-on: ubuntu-latest
     steps:
