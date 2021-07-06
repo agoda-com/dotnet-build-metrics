@@ -79,9 +79,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: release
-      uses: StuYarrow/publish-release@v1
+      uses: eregon/publish-release@v1
       env:
-        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-        id: ${{ env.MAJOR_MINOR_VERSION }}${{ github.run_number }}
+        release_id: ${{ steps.create_release.outputs.id }}
