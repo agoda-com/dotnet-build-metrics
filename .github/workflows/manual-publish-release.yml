@@ -81,6 +81,6 @@ jobs:
     - name: release
       uses: StuYarrow/publish-release@v1
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
       with:
         id: ${{ env.MAJOR_MINOR_VERSION }}${{ github.run_number }}
