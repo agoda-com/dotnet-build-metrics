@@ -83,4 +83,4 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        release_id: ${{ steps.create_release.outputs.id }}
+        release_id: ${{ env.MAJOR_MINOR_VERSION }}${{ github.run_number }}
