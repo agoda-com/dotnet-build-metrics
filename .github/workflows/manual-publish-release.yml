@@ -83,4 +83,5 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
       with:
+        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         id: ${{ env.MAJOR_MINOR_VERSION }}${{ github.run_number }}
