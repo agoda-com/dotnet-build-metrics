@@ -13,6 +13,8 @@ namespace Agoda.Builds.Metrics
     {
         public string StartDateTime { get; set; }
         public string EndDateTime { get; set; }
+        public string BuildMetricsESEndPoint { get; set; }
+        public string BuildMetricsESIndex { get; set; }
         public string ProjectName { get; set; }
         [Output]
         public string DebugOutput { get; set; }
@@ -42,14 +44,13 @@ namespace Agoda.Builds.Metrics
                 using (var httpClient = new HttpClient())
                 {
                     httpClient.Timeout = TimeSpan.FromMinutes(1);
-                    string uriString = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("url")) ? Environment.GetEnvironmentVariable("url") : "http://backend-elasticsearch:9200";
-                    string index = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("index")) ? Environment.GetEnvironmentVariable("index") : "build-metrics";
-                    httpClient.BaseAddress = new Uri(uriString);
+                    PopulateBuildMetricESDetails();
+                    httpClient.BaseAddress = new Uri(BuildMetricsESEndPoint);
                     var content = new StringContent(JsonSerializer.Serialize(data), Encoding.UTF8, "application/json");
-                    var responses = httpClient.PostAsync($"/{index}/_doc", content).Result;
+                    var responses = httpClient.PostAsync($"/{BuildMetricsESIndex}/_doc", content).Result;
                     if (!responses.IsSuccessStatusCode)
                     {
-                       Log.LogMessage($"Unable to publish metrics - {responses.ReasonPhrase}");
+                        Log.LogMessage($"Unable to publish metrics - {responses.ReasonPhrase}");
                     }
                 }
 
@@ -60,6 +61,18 @@ namespace Agoda.Builds.Metrics
             }
 
             return true;
+        }
+
+        private void PopulateBuildMetricESDetails()
+        {
+            if (string.IsNullOrEmpty(BuildMetricsESEndPoint))
+            {
+                this.BuildMetricsESEndPoint = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("BUILD_METRICS_ES_ENDPOINT")) ? Environment.GetEnvironmentVariable("BUILD_METRICS_ES_ENDPOINT") : "http://backend-elasticsearch:9200";
+            }
+            if (string.IsNullOrEmpty(BuildMetricsESIndex))
+            {
+                this.BuildMetricsESIndex = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("BUILD_METRICS_ES_INDEX")) ? Environment.GetEnvironmentVariable("BUILD_METRICS_ES_INDEX") : "build-metrics";
+            }
         }
 
         private static string GetGitDetails(string arg)
