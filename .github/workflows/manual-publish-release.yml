@@ -67,11 +67,11 @@ jobs:
           dotnet-version: ${{ env.NETCORE_VERSION }}
       - name: Push to Klondike
         if: github.ref != 'refs/heads/master'
-        run: dotnet nuget push nupkg/**/*.nupkg -k ${{ secrets.KLONDIKE_API_KEY }} -s https://nuget.org --skip-duplicate
+        run: dotnet nuget push nupkg/**/*.nupkg -k ${{ secrets.KLONDIKE_API_KEY }} -s https://hk-lib-nuget.agodadev.io/ --skip-duplicate
 
       - name: Push to NuGet
         if: github.ref == 'refs/heads/master'
-        run: dotnet nuget push nupkg/**/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://hk-lib-nuget.agodadev.io/ --skip-duplicate
+        run: dotnet nuget push nupkg/**/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://nuget.org --skip-duplicate
 
   release:
     needs: deploy
