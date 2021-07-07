@@ -7,6 +7,8 @@
     <NoPackageAnalysis>true</NoPackageAnalysis>
     <!-- Change the default location where NuGet will put the build output -->
     <BuildOutputTargetFolder>tasks</BuildOutputTargetFolder>
+    <!-- Include all referenced assemblies in the package -->
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Build.Framework" Version="15.1.1012" />
@@ -33,7 +35,7 @@
     but before NuGet generates a nuspec.
     -->
     <ItemGroup>
-      <_PackageFiles Include="bin\$(Configuration)\*\*.dll;bin\$(Configuration)\*\lib\*\*.*">
+      <_PackageFiles Include="bin\$(Configuration)\*\*.dll;bin\$(Configuration)\*\*.deps;bin\$(Configuration)\*\lib\*\*.*">
         <PackagePath>tasks\%(RecursiveDir)</PackagePath>
         <Visible>false</Visible>
         <BuildAction>Content</BuildAction>
