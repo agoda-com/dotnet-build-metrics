@@ -24,10 +24,11 @@ To use the task simply add the `Agoda.Builds.Metrics` as a dependency to your pr
 
 ```
 <Import 
-  Project="$(MSBuildThisFileDirectory)\..\packages\agoda.builds.metrics\1.0.6\build\Agoda.Builds.Metrics.targets" 
-  Condition="Exists('$(MSBuildThisFileDirectory)\..\packages\agoda.builds.metrics\1.0.6\build\Agoda.Builds.Metrics.targets')"
+  Project="$(MSBuildThisFileDirectory)\..\packages\agoda.builds.metrics\X.X.X\build\Agoda.Builds.Metrics.targets" 
+  Condition="Exists('$(MSBuildThisFileDirectory)\..\packages\agoda.builds.metrics\X.X.X\build\Agoda.Builds.Metrics.targets')"
 />
 ```
+Where X.X.X is latest release published
 ElasticSearch URL and the name of the index are taken from environment variables if they are present. The fallback values are http://backend-elasticsearch:9200 for the URL and build-metrics for the index. The index must already exist.
 ```
 string uriString = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("url")) ? Environment.GetEnvironmentVariable("url") : "http://backend-elasticsearch:9200";
