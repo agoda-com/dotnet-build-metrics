@@ -47,7 +47,7 @@ jobs:
   deploy:
     needs: build
     name: Deploy Packages
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64]
     steps:
       - name: Download Package artifact
         uses: actions/download-artifact@master
@@ -67,7 +67,7 @@ jobs:
           dotnet-version: ${{ env.NETCORE_VERSION }}
       - name: Push to Klondike
         if: github.ref != 'refs/heads/master'
-        run: dotnet nuget push nupkg/**/*.nupkg -k ${{ secrets.KLONDIKE_API_KEY }} -s https://bk-lib-nuget.agodadev.io/api/odata --skip-duplicate
+        run: dotnet nuget push nupkg/**/*.nupkg -k ${{ secrets.KLONDIKE_API_KEY }} -s https://hk-lib-nuget.agodadev.io/api/odata --skip-duplicate
 
       - name: Push to NuGet
         if: github.ref == 'refs/heads/master'
