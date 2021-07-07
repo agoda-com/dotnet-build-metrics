@@ -2,7 +2,6 @@ name: .NET Core Build and Publish
 
 on:
   push:
-    branches: [master]
     
 env:
   NETCORE_VERSION: '3.1.x'  
@@ -35,9 +34,15 @@ jobs:
       working-directory: ${{ env.GIT_REPO_ROOT }}        
       run: dotnet build ${{ env.SOLUTION_FILE }} --configuration Debug --no-restore
         
-    - name: Pack
+    - name: Pack Release
+      if: github.ref == 'refs/heads/master'
       working-directory: ${{ env.GIT_REPO_ROOT }}    
       run: dotnet pack ${{ env.SOLUTION_FILE }} --configuration Debug -o finalpackage --no-build -p:PackageVersion=${{ env.MAJOR_MINOR_VERSION }}${{ github.run_number }}
+
+    - name: Pack Preview
+      if: github.ref != 'refs/heads/master'
+      working-directory: ${{ env.GIT_REPO_ROOT }}    
+      run: dotnet pack ${{ env.SOLUTION_FILE }} --configuration Debug -o finalpackage --no-build -p:PackageVersion=${{ env.MAJOR_MINOR_VERSION }}${{ github.run_number }}-preview
 
     - name: Publish artifact
       uses: actions/upload-artifact@master
@@ -47,9 +52,9 @@ jobs:
 
   deploy:
     needs: build
-    #if: github.ref == 'refs/heads/master'
     name: Deploy Packages
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
     steps:
       - name: Download Package artifact
         uses: actions/download-artifact@master
@@ -67,7 +72,7 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: ${{ env.NETCORE_VERSION }}
-
+          
       - name: Push to NuGet
         run: dotnet nuget push nupkg/**/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://nuget.org --skip-duplicate
 
