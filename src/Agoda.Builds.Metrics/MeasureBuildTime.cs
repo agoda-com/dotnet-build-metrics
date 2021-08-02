@@ -39,7 +39,7 @@ namespace Agoda.Builds.Metrics
                     type = ".Net",
                     projectName = ProjectName,
                     repository = gitUrl,
-                    repositoryName = gitUrl.Substring(gitUrl.LastIndexOf("/") + 1),
+                    repositoryName = gitUrl.Substring(gitUrl.LastIndexOf("/") + 1).Split('.')[0],
                     date = DateTime.UtcNow
                 };
 
