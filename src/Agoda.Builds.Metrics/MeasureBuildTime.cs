@@ -24,6 +24,7 @@ namespace Agoda.Builds.Metrics
             DebugOutput = (DateTime.Parse(EndDateTime) - DateTime.Parse(StartDateTime)).TotalMilliseconds.ToString();
             try
             {
+                var gitUrl = GetGitDetails("config --get remote.origin.url");
                 var data = new
                 {
                     id = Guid.NewGuid(),
@@ -37,7 +38,8 @@ namespace Agoda.Builds.Metrics
                     branch = GetGitDetails("rev-parse --abbrev-ref HEAD"),
                     type = ".Net",
                     projectName = ProjectName,
-                    repository = GetGitDetails("config --get remote.origin.url"),
+                    repository = gitUrl,
+                    repositoryName = gitUrl.Substring(gitUrl.LastIndexOf("/") + 1),
                     date = DateTime.UtcNow
                 };
 
