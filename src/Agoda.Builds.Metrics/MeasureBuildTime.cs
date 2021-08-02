@@ -39,7 +39,7 @@ namespace Agoda.Builds.Metrics
                     type = ".Net",
                     projectName = ProjectName,
                     repository = gitUrl,
-                    repositoryName = gitUrl.Substring(gitUrl.LastIndexOf("/") + 1).Split('.')[0],
+                    repositoryName = extractRepositoryName(gitUrl),
                     date = DateTime.UtcNow
                 };
 
@@ -63,6 +63,12 @@ namespace Agoda.Builds.Metrics
             }
 
             return true;
+        }
+
+        private static string extractRepositoryName(string gitUrl)
+        {
+            var repositoryName = gitUrl.Substring(gitUrl.LastIndexOf("/") + 1);
+            return repositoryName.Contains(".git") ? repositoryName.Substring(0, repositoryName.LastIndexOf(".")) : repositoryName;
         }
 
         private void PopulateBuildMetricESDetails()
