@@ -1,6 +1,6 @@
 # Dotnet Build Metrics
 
-This is a custom MSBuild task that will measure the time to build each project and publishes the information to an ElasticSearch datastore. The intent is to measure and improve developer experience on local workstations.
+This is a custom MSBuild task that will measure the time to build each project and publishes the information to a datastore. The intent is to measure and improve developer experience on local workstations.
 
 **_Username and hostname are collected as a part of build information_**
 
@@ -23,12 +23,13 @@ This is a custom MSBuild task that will measure the time to build each project a
 
 To use the task simply install the [`Agoda.Builds.Metrics` NuGet package](https://www.nuget.org/packages/Agoda.Builds.Metrics) to all of the projects in your solution, this will automatically enable metrics publication for that project.
 
-ElasticSearch URL and the name of the index are taken from environment variables if they are present as per the following table:
+Web API URL and the name of the endpoint are taken from environment variables if they are present as per the following table:
 
-|Parameter              |Environment Variable     |Default Value                    |
-|-----------------------|-------------------------|---------------------------------|
-|Elastic Search Endpoint|BUILD_METRICS_ES_ENDPOINT|http://backend-elasticsearch:9200|
-|Elastic Search Index   |BUILD_METRICS_ES_INDEX   |build-metrics                    |
+|Parameter              |Environment Variable     |Default Value                        |
+|-----------------------|-------------------------|-------------------------------------|
+|Elastic Search Endpoint|BUILD_METRICS_ENDPOINT   |http://compilation-metrics/dotnet    |
+
+We recommend create a CNAME on your internal DNS servers for compilation-metrics to point at an internal API that captures the data and stores it. 
 
 Example build log output in Visual Studio using MSBuild.
 
