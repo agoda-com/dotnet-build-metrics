@@ -13,8 +13,7 @@ namespace Agoda.Builds.Metrics
     {
         public string StartDateTime { get; set; }
         public string EndDateTime { get; set; }
-        public string ElasticEndPoint { get; set; }
-        public string ElasticIndex { get; set; }
+        public string ApiEndPoint { get; set; }
         public string ProjectName { get; set; }
         [Output]
         public string DebugOutput { get; set; }
@@ -47,9 +46,8 @@ namespace Agoda.Builds.Metrics
                 {
                     httpClient.Timeout = TimeSpan.FromMinutes(1);
                     PopulateBuildMetricESDetails();
-                    httpClient.BaseAddress = new Uri(ElasticEndPoint);
                     var content = new StringContent(JsonSerializer.Serialize(data), Encoding.UTF8, "application/json");
-                    var responses = httpClient.PostAsync($"/{ElasticIndex}/_doc", content).Result;
+                    var responses = httpClient.PostAsync(ApiEndPoint, content).Result;
                     if (!responses.IsSuccessStatusCode)
                     {
                         Log.LogMessage($"Unable to publish metrics - {responses.ReasonPhrase}");
@@ -73,13 +71,9 @@ namespace Agoda.Builds.Metrics
 
         private void PopulateBuildMetricESDetails()
         {
-            if (string.IsNullOrEmpty(ElasticEndPoint))
+            if (string.IsNullOrEmpty(ApiEndPoint))
             {
-                ElasticEndPoint = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("BUILD_METRICS_ES_ENDPOINT")) ? Environment.GetEnvironmentVariable("BUILD_METRICS_ES_ENDPOINT") : "http://backend-elasticsearch:9200";
-            }
-            if (string.IsNullOrEmpty(ElasticIndex))
-            {
-                ElasticIndex = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("BUILD_METRICS_ES_INDEX")) ? Environment.GetEnvironmentVariable("BUILD_METRICS_ES_INDEX") : "build-metrics";
+                ApiEndPoint = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("BUILD_METRICS_ES_ENDPOINT")) ? Environment.GetEnvironmentVariable("BUILD_METRICS_ES_ENDPOINT") : "http://compilation-metrics/dotnet";
             }
         }
 
