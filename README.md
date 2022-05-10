@@ -27,7 +27,7 @@ Web API URL and the name of the endpoint are taken from environment variables if
 
 |Parameter              |Environment Variable     |Default Value                        |
 |-----------------------|-------------------------|-------------------------------------|
-|Elastic Search Endpoint|BUILD_METRICS_ENDPOINT   |http://compilation-metrics/dotnet    |
+|Elastic Search Endpoint|BUILD_METRICS_ES_ENDPOINT|http://compilation-metrics/dotnet    |
 
 We recommend create a CNAME on your internal DNS servers for compilation-metrics to point at an internal API that captures the data and stores it. 
 
