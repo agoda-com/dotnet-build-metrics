@@ -23,7 +23,8 @@ namespace Agoda.Builds.Metrics
             DebugOutput = (DateTime.Parse(EndDateTime) - DateTime.Parse(StartDateTime)).TotalMilliseconds.ToString();
             try
             {
-                var gitUrl = GetGitDetails("config --get remote.origin.url");
+                var gitRootDir = GetGitDetails("rev-parse --show-toplevel");
+                var gitUrl = GetGitDetails("config --get remote.origin.url", gitRootDir);
                 var data = new
                 {
                     id = Guid.NewGuid(),
@@ -34,7 +35,7 @@ namespace Agoda.Builds.Metrics
                     platform = Environment.OSVersion.Platform,
                     os = Environment.OSVersion.VersionString,
                     timeTaken = DebugOutput,
-                    branch = GetGitDetails("rev-parse --abbrev-ref HEAD"),
+                    branch = GetGitDetails("rev-parse --abbrev-ref HEAD", gitRootDir),
                     type = ".Net",
                     projectName = ProjectName,
                     repository = gitUrl,
@@ -77,15 +78,19 @@ namespace Agoda.Builds.Metrics
             }
         }
 
-        private static string GetGitDetails(string arg)
+        private static string GetGitDetails(string arg, string cwd = null)
         {
             string executableName = "git";
             if (Environment.OSVersion.Platform == PlatformID.Win32NT)
                 executableName += ".exe";
             ProcessStartInfo startInfo = new ProcessStartInfo(executableName);
 
+            if (cwd != null)
+            {
+                startInfo.WorkingDirectory = cwd;
+            }
+
             startInfo.UseShellExecute = false;
-            startInfo.WorkingDirectory = Environment.CurrentDirectory;
             startInfo.RedirectStandardInput = true;
             startInfo.RedirectStandardOutput = true;
             startInfo.Arguments = arg;
