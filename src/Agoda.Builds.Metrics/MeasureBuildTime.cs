@@ -65,8 +65,8 @@ namespace Agoda.Builds.Metrics
 
         private static string extractRepositoryName(string gitUrl)
         {
-            var repositoryName = gitUrl.Substring(gitUrl.LastIndexOf("/") + 1);
-            return repositoryName.Contains(".git") ? repositoryName.Substring(0, repositoryName.LastIndexOf(".")) : repositoryName;
+            var repositoryName = gitUrl.Substring(gitUrl.LastIndexOf('/') + 1);
+            return repositoryName.EndsWith(".git") ? repositoryName.Substring(0, repositoryName.LastIndexOf('.')) : repositoryName;
         }
 
         private void PopulateBuildMetricESDetails()
