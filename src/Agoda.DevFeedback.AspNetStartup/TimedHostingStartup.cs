@@ -9,13 +9,15 @@ namespace Agoda.DevFeedback.AspNetStartup
     {
         public void Configure(IWebHostBuilder builder)
         {
-            TimedStartup.From = DateTime.Now;
+            TimedStartup.Configure = DateTime.Now;
 
             builder.ConfigureServices((context, services) =>
             {
                 if (context.HostingEnvironment.IsDevelopment())
                 {
                     services.AddTransient<IStartupFilter, TimedStartupFilter>();
+
+                    services.AddHostedService<TimedStartupHostedService>();
                 }
             });
         }

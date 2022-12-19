@@ -2,7 +2,8 @@
 {
     internal static class TimedStartup
     {
-        public static DateTime? From;
-        public static DateTime? Until;
+        public static DateTime? Configure;
+        public static DateTime? Response;
+        public static DateTime? Started;
     }
 }

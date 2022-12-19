@@ -5,15 +5,15 @@ namespace Agoda.DevFeedback.AspNetStartup
 {
     internal static class TimedStartupPublisher
     {
-        public static void Publish(TimeSpan startupTime)
+        public static void Publish(string type, TimeSpan timeTaken)
         {
             var gitContext = GitContextReader.GetGitContext();
 
             var result = new DevFeedbackData(
                 metricsVersion: Assembly.GetExecutingAssembly().GetName().Version?.ToString(),
-                type: ".AspNetStartup",
+                type: type,
                 projectName: Assembly.GetEntryAssembly()?.GetName().Name,
-                timeTaken: startupTime.TotalMilliseconds.ToString(),
+                timeTaken: timeTaken.TotalMilliseconds.ToString(),
                 gitContext: gitContext
             );
 

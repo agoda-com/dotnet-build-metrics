@@ -21,30 +21,30 @@ namespace Agoda.DevFeedback.AspNetStartup
         {
             await _next(httpContext);
 
-            if (!TimedStartup.Until.HasValue)
+            if (!TimedStartup.Response.HasValue)
             {
-                TimedStartup.Until = DateTime.Now;
+                TimedStartup.Response = DateTime.Now;
 
-                var from = TimedStartup.From;
-                var until = TimedStartup.Until;
+                var from = TimedStartup.Configure;
+                var until = TimedStartup.Response;
 
                 if (from.HasValue && until.HasValue)
                 {
                     var diff = from.Value - until.Value;
 
                     _logger.LogDebug(
-                        "Startup time was {seconds} seconds for {path}",
+                        "Application startup time until first response was {seconds} seconds for {path}",
                         Math.Round(diff.TotalSeconds, 1),
                         httpContext.Request.Path
                     );
 
                     try
                     {
-                        TimedStartupPublisher.Publish(diff);
+                        TimedStartupPublisher.Publish(type: ".AspNetResponse", timeTaken: diff);
                     }
                     catch (Exception ex)
                     {
-                        _logger.LogError(ex, "Failed to publish startup time.");
+                        _logger.LogError(ex, "Failed to publish first response time.");
                     }
                 }
             }
