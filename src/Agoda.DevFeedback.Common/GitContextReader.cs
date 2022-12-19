@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace Agoda.Builds.Metrics
+namespace Agoda.DevFeedback.Common
 {
     public static class GitContextReader
     {

@@ -3,9 +3,9 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 
-namespace Agoda.Builds.Metrics
+namespace Agoda.DevFeedback.Common
 {
-    internal static class BuildTimePublisher
+    public static class BuildTimePublisher
     {
         public static void Publish(string apiEndpoint, BuildTimeData result)
         {

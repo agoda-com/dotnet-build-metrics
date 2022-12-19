@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.Json.Serialization;
 
-namespace Agoda.Builds.Metrics
+namespace Agoda.DevFeedback.Common
 {
     public class BuildTimeData
     {

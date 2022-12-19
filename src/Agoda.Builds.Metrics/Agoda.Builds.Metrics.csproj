@@ -24,6 +24,9 @@
   <ItemGroup>
     <None Include="build\**" Pack="True" PackagePath="build\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Agoda.DevFeedback.Common\Agoda.DevFeedback.Common.csproj" />
+  </ItemGroup>
 
 <!-- 
     Copy dependencies into the tools/$(TargetFramework)/ package folders.
