@@ -1,101 +1,62 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
-using System.Net.Http;
-using System.Text;
-using Microsoft.Build.Framework;
+﻿using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
+using System;
 
-using System.Text.Json;
 namespace Agoda.Builds.Metrics
 {
     public class MeasureBuildTime : Task
     {
-        public string StartDateTime { get; set; }
-        public string EndDateTime { get; set; }
-        public string ApiEndPoint { get; set; }
+        /// <summary>
+        /// Set by the 'CaptureBuildTime' build event.
+        /// </summary>
         public string ProjectName { get; set; }
+
+        /// <summary>
+        /// Set by the 'CaptureBuildTime' build event.
+        /// </summary>
+        public string StartDateTime { get; set; }
+
+        /// <summary>
+        /// Set by the 'CaptureBuildTime' build event.
+        /// </summary>
+        public string EndDateTime { get; set; }
+
+        /// <summary>
+        /// Seems not to be set from anywhere.
+        /// </summary>
+        public string ApiEndPoint { get; set; }
+
+        /// <summary>
+        /// Set by the Task.Execute method.
+        /// Used by the 'CaptureBuildTime' build event.
+        /// </summary>
         [Output]
-        public string DebugOutput { get; set; }
+        public string BuildTimeMilliseconds { get; set; }
 
         public override bool Execute()
         {
-            DebugOutput = (DateTime.Parse(EndDateTime) - DateTime.Parse(StartDateTime)).TotalMilliseconds.ToString();
+            BuildTimeMilliseconds = DateTime.Parse(EndDateTime).Subtract(DateTime.Parse(StartDateTime)).TotalMilliseconds.ToString();
+
             try
             {
-                var gitUrl = GetGitDetails("config --get remote.origin.url");
-                var data = new
-                {
-                    id = Guid.NewGuid(),
-                    metricsVersion = typeof(MeasureBuildTime).Assembly.GetName().Version.ToString(),
-                    userName = Environment.UserName,
-                    cpuCount = Environment.ProcessorCount,
-                    hostname = Environment.MachineName,
-                    platform = Environment.OSVersion.Platform,
-                    os = Environment.OSVersion.VersionString,
-                    timeTaken = DebugOutput,
-                    branch = GetGitDetails("rev-parse --abbrev-ref HEAD"),
-                    type = ".Net",
-                    projectName = ProjectName,
-                    repository = gitUrl,
-                    repositoryName = extractRepositoryName(gitUrl),
-                    date = DateTime.UtcNow
-                };
+                var gitContext = GitContextReader.GetGitContext();
 
-                using (var httpClient = new HttpClient())
-                {
-                    httpClient.Timeout = TimeSpan.FromMinutes(1);
-                    PopulateBuildMetricESDetails();
-                    var content = new StringContent(JsonSerializer.Serialize(data), Encoding.UTF8, "application/json");
-                    var responses = httpClient.PostAsync(ApiEndPoint, content).Result;
-                    if (!responses.IsSuccessStatusCode)
-                    {
-                        Log.LogMessage($"Unable to publish metrics - {responses.ReasonPhrase}");
-                    }
-                }
+                var result = new BuildTimeData(
+                    metricsVersion: typeof(MeasureBuildTime).Assembly.GetName().Version.ToString(),
+                    type: ".Net",
+                    projectName: ProjectName,
+                    timeTaken: BuildTimeMilliseconds,
+                    gitContext: gitContext
+                );
 
+                BuildTimePublisher.Publish(ApiEndPoint, result);
             }
             catch (Exception ex)
             {
-                Log.LogMessage($"Unexpected issue while generating metrics - {ex.Message}");
+                Log.LogMessage("An error occured while capturing the build time: " + ex);
             }
 
             return true;
-        }
-
-        private static string extractRepositoryName(string gitUrl)
-        {
-            var repositoryName = gitUrl.Substring(gitUrl.LastIndexOf('/') + 1);
-            return repositoryName.EndsWith(".git") ? repositoryName.Substring(0, repositoryName.LastIndexOf('.')) : repositoryName;
-        }
-
-        private void PopulateBuildMetricESDetails()
-        {
-            if (string.IsNullOrEmpty(ApiEndPoint))
-            {
-                ApiEndPoint = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("BUILD_METRICS_ES_ENDPOINT")) ? Environment.GetEnvironmentVariable("BUILD_METRICS_ES_ENDPOINT") : "http://compilation-metrics/dotnet";
-            }
-        }
-
-        private static string GetGitDetails(string arg)
-        {
-            string executableName = "git";
-            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
-                executableName += ".exe";
-            ProcessStartInfo startInfo = new ProcessStartInfo(executableName);
-
-            startInfo.UseShellExecute = false;
-            startInfo.WorkingDirectory = Environment.CurrentDirectory;
-            startInfo.RedirectStandardInput = true;
-            startInfo.RedirectStandardOutput = true;
-            startInfo.Arguments = arg;
-
-            Process process = new Process();
-            process.StartInfo = startInfo;
-            process.Start();
-
-            var gitBranch = process.StandardOutput.ReadLine();
-            return gitBranch;
         }
     }
 }
