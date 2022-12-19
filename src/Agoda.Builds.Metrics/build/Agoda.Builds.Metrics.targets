@@ -8,23 +8,19 @@
 
   <UsingTask TaskName="Agoda.Builds.Metrics.MeasureBuildTime" AssemblyFile="$(TaskAssembly)" />
 
-  <Target Name="SaveTheTime" BeforeTargets="PreBuildEvent">
-    <CreateProperty
-      Value="$([System.DateTime]::Now.ToString(&quot;yyyy-MM-dd HH:mm:ss.ffffzzz&quot;))">
-      <Output
-      TaskParameter="Value"
-      PropertyName="StartTime" />
+  <Target Name="SetStartTime" BeforeTargets="PreBuildEvent">
+    <CreateProperty Value="$([System.DateTime]::Now.ToString(&quot;yyyy-MM-dd HH:mm:ss.ffffzzz&quot;))">
+      <Output TaskParameter="Value" PropertyName="StartTime" />
     </CreateProperty>
   </Target>
 
-  <Target Name="ExecuteMeasurement" BeforeTargets="PostBuildEvent">
+  <Target Name="CaptureBuildTime" BeforeTargets="PostBuildEvent">
     <Agoda.Builds.Metrics.MeasureBuildTime
-	  StartDateTime="$(StartTime)" 
-	  EndDateTime="$([System.DateTime]::Now.ToString(&quot;yyyy-MM-dd HH:mm:ss.ffffzzz&quot;))"
 	  ProjectName="$(MSBuildProjectName)"
-	  >
-      <Output PropertyName="BuildTime" TaskParameter="DebugOutput" /> 
+	  StartDateTime="$(StartTime)" 
+	  EndDateTime="$([System.DateTime]::Now.ToString(&quot;yyyy-MM-dd HH:mm:ss.ffffzzz&quot;))">
+      <Output PropertyName="BuildTime" TaskParameter="BuildTimeMilliseconds" /> 
     </Agoda.Builds.Metrics.MeasureBuildTime>
-    <Message Text="The Build Time was $(BuildTime) ms" Importance="High" />
+    <Message Text="The measured build time for $(ProjectName) was $(BuildTime)ms." Importance="High" />
   </Target>
 </Project>
