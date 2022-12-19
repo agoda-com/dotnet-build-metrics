@@ -9,7 +9,7 @@ namespace Agoda.DevFeedback.AspNetStartup
         {
             var gitContext = GitContextReader.GetGitContext();
 
-            var result = new BuildTimeData(
+            var result = new DevFeedbackData(
                 metricsVersion: Assembly.GetExecutingAssembly().GetName().Version?.ToString(),
                 type: ".AspNetStartup",
                 projectName: Assembly.GetEntryAssembly()?.GetName().Name,
@@ -17,7 +17,7 @@ namespace Agoda.DevFeedback.AspNetStartup
                 gitContext: gitContext
             );
 
-            BuildTimePublisher.Publish(apiEndpoint: null, result);
+            DevFeedbackPublisher.Publish(apiEndpoint: null, result);
         }
     }
 }

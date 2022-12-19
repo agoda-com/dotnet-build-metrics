@@ -5,15 +5,15 @@ using System.Text.Json;
 
 namespace Agoda.DevFeedback.Common
 {
-    public static class BuildTimePublisher
+    public static class DevFeedbackPublisher
     {
-        public static void Publish(string apiEndpoint, BuildTimeData result)
+        public static void Publish(string apiEndpoint, DevFeedbackData data)
         {
             using (var httpClient = new HttpClient())
             {
                 httpClient.Timeout = TimeSpan.FromSeconds(10);
 
-                var content = new StringContent(JsonSerializer.Serialize(result), Encoding.UTF8, "application/json");
+                var content = new StringContent(JsonSerializer.Serialize(data), Encoding.UTF8, "application/json");
                 var response = httpClient.PostAsync(GetApiEndpoint(apiEndpoint), content).Result;
 
                 response.EnsureSuccessStatusCode();
