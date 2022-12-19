@@ -1,4 +1,4 @@
-﻿using Agoda.DevFeedback.Common;
+using Agoda.DevFeedback.Common;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 using System;
