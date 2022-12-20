@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Threading.Tasks;
 
 namespace Agoda.DevFeedback.AspNetStartup
 {
@@ -30,11 +32,11 @@ namespace Agoda.DevFeedback.AspNetStartup
 
                 if (from.HasValue && until.HasValue)
                 {
-                    var diff = from.Value - until.Value;
+                    var diff = until.Value - from.Value;
 
                     _logger.LogDebug(
-                        "Application startup time until first response was {seconds} seconds for {path}",
-                        Math.Round(diff.TotalSeconds, 1),
+                        "Application startup time until first response was {duration}ms for {path}",
+                        Math.Round(diff.TotalMilliseconds, 0),
                         httpContext.Request.Path
                     );
 

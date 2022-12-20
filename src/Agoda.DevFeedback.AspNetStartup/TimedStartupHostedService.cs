@@ -1,5 +1,8 @@
 ﻿using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Agoda.DevFeedback.AspNetStartup
 {
@@ -34,11 +37,11 @@ namespace Agoda.DevFeedback.AspNetStartup
 
             if (from.HasValue && until.HasValue)
             {
-                var diff = from.Value - until.Value;
+                var diff = until.Value - from.Value;
 
                 _logger.LogDebug(
-                    "Application startup time was {seconds} seconds.",
-                    Math.Round(diff.TotalSeconds, 1)
+                    "Application startup time was {duration}ms.",
+                    Math.Round(diff.TotalMilliseconds, 0)
                 );
 
                 try

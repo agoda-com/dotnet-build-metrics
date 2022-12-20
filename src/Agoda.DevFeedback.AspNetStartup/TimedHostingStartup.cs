@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 [assembly: HostingStartup(typeof(Agoda.DevFeedback.AspNetStartup.TimedHostingStartup))]
 
@@ -13,7 +14,7 @@ namespace Agoda.DevFeedback.AspNetStartup
 
             builder.ConfigureServices((context, services) =>
             {
-                if (context.HostingEnvironment.IsDevelopment())
+                if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
                 {
                     services.AddTransient<IStartupFilter, TimedStartupFilter>();
 

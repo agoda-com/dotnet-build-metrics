@@ -1,4 +1,5 @@
 ﻿using Agoda.DevFeedback.Common;
+using System;
 using System.Reflection;
 
 namespace Agoda.DevFeedback.AspNetStartup

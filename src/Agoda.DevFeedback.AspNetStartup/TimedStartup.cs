@@ -1,4 +1,6 @@
-﻿namespace Agoda.DevFeedback.AspNetStartup
+﻿using System;
+
+namespace Agoda.DevFeedback.AspNetStartup
 {
     internal static class TimedStartup
     {
