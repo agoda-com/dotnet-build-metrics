@@ -38,3 +38,19 @@ Example build log output in Visual Studio using MSBuild.
 Example build log output in Dotnet core CLI.
 
 ![](doc/img/DotnetCLIBuildTimeOutput.PNG)
+
+
+### Agoda.DevFeedback.AspNetStartup NuGet package
+
+The goal of this package is to measure the application startup time as an additional metrics that affects developer feedback besides build time.
+Monoliths are especially prone to slow startup times on developer laptops and this provides visibility and tracking of improvements/regressions thereof.
+
+This package measures the ASP.NET application's startup time in two ways.
+1) The time from WebHostBuilder ConfigureServices until HostApplicationLifetime OnStarted sent with type '.AspNetStartup'.
+2) The time from WebHostBuilder ConfigureServices until the first HTTP Reponse (measured from middleware) sent with type '.AspNetResponse'.
+
+Two environment variables are required to be set to enable the measurements.
+1) `ASPNETCORE_ENVIRONMENT` needs to be set as `Development` for the functionality to be added. This is so it's only enabled locally and not on production.
+2) `ASPNETCORE_HOSTINGSTARTUPASSEMBLIES` needs to be/include `Agoda.DevFeedback.AspNetStartup`. This is for package activation due to the use of [HostingStartup](https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.hosting.hostingstartupattribute?view=aspnetcore-6.0).
+
+For convenience these environment variables can be set under the lauch profile of the web application's `launchSettings.json` file and committed to the repository.
