@@ -1,4 +1,4 @@
-﻿namespace Agoda.Builds.Metrics
+﻿namespace Agoda.DevFeedback.Common
 {
     public class GitContext
     {

@@ -1,4 +1,5 @@
-﻿using Microsoft.Build.Framework;
+using Agoda.DevFeedback.Common;
+using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 using System;
 
@@ -41,7 +42,7 @@ namespace Agoda.Builds.Metrics
             {
                 var gitContext = GitContextReader.GetGitContext();
 
-                var result = new BuildTimeData(
+                var data = new DevFeedbackData(
                     metricsVersion: typeof(MeasureBuildTime).Assembly.GetName().Version.ToString(),
                     type: ".Net",
                     projectName: ProjectName,
@@ -49,7 +50,7 @@ namespace Agoda.Builds.Metrics
                     gitContext: gitContext
                 );
 
-                BuildTimePublisher.Publish(ApiEndPoint, result);
+                DevFeedbackPublisher.Publish(ApiEndPoint, data);
             }
             catch (Exception ex)
             {

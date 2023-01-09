@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Text.Json.Serialization;
 
-namespace Agoda.Builds.Metrics
+namespace Agoda.DevFeedback.Common
 {
-    public class BuildTimeData
+    public class DevFeedbackData
     {
         [JsonPropertyName("id")]
         public Guid Id { get; set; }
@@ -47,7 +47,7 @@ namespace Agoda.Builds.Metrics
         [JsonPropertyName("date")]
         public DateTime Date { get; set; }
 
-        public BuildTimeData(
+        public DevFeedbackData(
             string metricsVersion,
             string type,
             string projectName,
