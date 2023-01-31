@@ -3,12 +3,21 @@ using System.Diagnostics;
 
 namespace Agoda.DevFeedback.Common
 {
+    public class GitContextNotFoundException : Exception
+    {
+    }
+    
     public static class GitContextReader
     {
         public static GitContext GetGitContext()
         {
             string url = RunCommand("config --get remote.origin.url");
             string branch = RunCommand("rev-parse --abbrev-ref HEAD");
+            
+            if (string.IsNullOrEmpty(url) || string.IsNullOrEmpty(branch))
+            {
+                throw new GitContextNotFoundException();
+            }
 
             return new GitContext
             {
