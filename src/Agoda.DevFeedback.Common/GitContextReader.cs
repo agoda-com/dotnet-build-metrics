@@ -1,10 +1,14 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 
 namespace Agoda.DevFeedback.Common
 {
     public class GitContextNotFoundException : Exception
     {
+        public GitContextNotFoundException(string message) : base(message)
+        {
+        }
     }
     
     public static class GitContextReader
@@ -13,10 +17,15 @@ namespace Agoda.DevFeedback.Common
         {
             string url = RunCommand("config --get remote.origin.url");
             string branch = RunCommand("rev-parse --abbrev-ref HEAD");
-            
-            if (string.IsNullOrEmpty(url) || string.IsNullOrEmpty(branch))
+
+            if (string.IsNullOrEmpty(url))
             {
-                throw new GitContextNotFoundException();
+                throw new GitContextNotFoundException("unable to get git remote url");
+            }
+
+            if (string.IsNullOrEmpty(branch))
+            {
+                throw new GitContextNotFoundException("unable to get git branch");
             }
 
             return new GitContext
@@ -44,7 +53,14 @@ namespace Agoda.DevFeedback.Common
                 }
             };
 
-            process.Start();
+            try
+            {
+                process.Start();
+            }
+            catch(Win32Exception)
+            {
+                throw new GitContextNotFoundException("git executable not found");
+            }
 
             return process.StandardOutput.ReadLine();
         }

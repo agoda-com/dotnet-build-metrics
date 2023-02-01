@@ -45,9 +45,9 @@ namespace Agoda.DevFeedback.AspNetStartup
                     {
                         TimedStartupPublisher.Publish(type: ".AspNetResponse", timeTaken: diff);
                     }
-                    catch (GitContextNotFoundException)
+                    catch (GitContextNotFoundException ex)
                     {
-                        _logger.LogInformation("Unable to get git context. The startup time until first response will not be published.");
+                        _logger.LogInformation("The startup time until first response will not be published: {reason}", ex.Message);
                     }
                     catch (Exception ex)
                     {

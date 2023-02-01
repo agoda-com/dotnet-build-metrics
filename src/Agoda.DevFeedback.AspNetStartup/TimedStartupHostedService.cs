@@ -49,9 +49,9 @@ namespace Agoda.DevFeedback.AspNetStartup
                 {
                     TimedStartupPublisher.Publish(type: ".AspNetStartup", timeTaken: diff);
                 }
-                catch (GitContextNotFoundException)
+                catch (GitContextNotFoundException ex)
                 {
-                    _logger.LogInformation("Unable to get git context. The startup time will not be published.");
+                    _logger.LogInformation("The startup time will not be published: {reason}", ex.Message);
                 }
                 catch (Exception ex)
                 {
