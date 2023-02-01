@@ -57,9 +57,9 @@ namespace Agoda.DevFeedback.Common
             {
                 process.Start();
             }
-            catch(Win32Exception)
+            catch(Win32Exception ex)
             {
-                throw new GitContextNotFoundException("git executable not found");
+                throw new GitContextNotFoundException($"failed to run git command ({ex.Message})");
             }
 
             return process.StandardOutput.ReadLine();
