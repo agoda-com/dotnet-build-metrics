@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
+using Agoda.DevFeedback.Common;
 
 namespace Agoda.DevFeedback.AspNetStartup
 {
@@ -34,7 +35,7 @@ namespace Agoda.DevFeedback.AspNetStartup
                 {
                     var diff = until.Value - from.Value;
 
-                    _logger.LogDebug(
+                    _logger.LogInformation(
                         "Application startup time until first response was {duration}ms for {path}",
                         Math.Round(diff.TotalMilliseconds, 0),
                         httpContext.Request.Path
@@ -43,6 +44,10 @@ namespace Agoda.DevFeedback.AspNetStartup
                     try
                     {
                         TimedStartupPublisher.Publish(type: ".AspNetResponse", timeTaken: diff);
+                    }
+                    catch (GitContextNotFoundException ex)
+                    {
+                        _logger.LogInformation("The startup time until first response will not be published: {reason}", ex.Message);
                     }
                     catch (Exception ex)
                     {

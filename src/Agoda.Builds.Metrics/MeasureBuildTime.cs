@@ -52,6 +52,10 @@ namespace Agoda.Builds.Metrics
 
                 DevFeedbackPublisher.Publish(ApiEndPoint, data);
             }
+            catch (GitContextNotFoundException ex)
+            {
+                Log.LogMessage($"The build time will not be published: {ex.Message}");
+            }
             catch (Exception ex)
             {
                 Log.LogMessage("An error occured while capturing the build time: " + ex);

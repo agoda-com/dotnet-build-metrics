@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Agoda.DevFeedback.Common;
 
 namespace Agoda.DevFeedback.AspNetStartup
 {
@@ -39,7 +40,7 @@ namespace Agoda.DevFeedback.AspNetStartup
             {
                 var diff = until.Value - from.Value;
 
-                _logger.LogDebug(
+                _logger.LogInformation(
                     "Application startup time was {duration}ms.",
                     Math.Round(diff.TotalMilliseconds, 0)
                 );
@@ -47,6 +48,10 @@ namespace Agoda.DevFeedback.AspNetStartup
                 try
                 {
                     TimedStartupPublisher.Publish(type: ".AspNetStartup", timeTaken: diff);
+                }
+                catch (GitContextNotFoundException ex)
+                {
+                    _logger.LogInformation("The startup time will not be published: {reason}", ex.Message);
                 }
                 catch (Exception ex)
                 {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 
 namespace Agoda.DevFeedback.Common
@@ -9,6 +10,16 @@ namespace Agoda.DevFeedback.Common
         {
             string url = RunCommand("config --get remote.origin.url");
             string branch = RunCommand("rev-parse --abbrev-ref HEAD");
+
+            if (string.IsNullOrEmpty(url))
+            {
+                throw new GitContextException("Unable to get git remote url.");
+            }
+
+            if (string.IsNullOrEmpty(branch))
+            {
+                throw new GitContextException("Unable to get git branch.");
+            }
 
             return new GitContext
             {
@@ -35,7 +46,14 @@ namespace Agoda.DevFeedback.Common
                 }
             };
 
-            process.Start();
+            try
+            {
+                process.Start();
+            }
+            catch(Win32Exception ex)
+            {
+                throw new GitContextException("Failed to run git command.", ex);
+            }
 
             return process.StandardOutput.ReadLine();
         }
