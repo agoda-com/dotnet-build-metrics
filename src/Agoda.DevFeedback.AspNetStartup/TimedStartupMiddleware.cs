@@ -45,7 +45,7 @@ namespace Agoda.DevFeedback.AspNetStartup
                     {
                         TimedStartupPublisher.Publish(type: ".AspNetResponse", timeTaken: diff);
                     }
-                    catch (GitContextNotFoundException ex)
+                    catch (GitContextException ex)
                     {
                         _logger.LogInformation("The startup time until first response will not be published: {reason}", ex.Message);
                     }

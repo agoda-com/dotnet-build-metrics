@@ -49,7 +49,7 @@ namespace Agoda.DevFeedback.AspNetStartup
                 {
                     TimedStartupPublisher.Publish(type: ".AspNetStartup", timeTaken: diff);
                 }
-                catch (GitContextNotFoundException ex)
+                catch (GitContextException ex)
                 {
                     _logger.LogInformation("The startup time will not be published: {reason}", ex.Message);
                 }
