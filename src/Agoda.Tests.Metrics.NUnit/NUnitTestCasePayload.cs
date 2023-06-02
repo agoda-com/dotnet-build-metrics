@@ -44,6 +44,6 @@ namespace Agoda.Tests.Metrics.NUnit
 
         public string RepositoryName { get; set; }
 
-        public List<TestCase> NUnitTestCases { get; set; }
+        public IList<TestCase> NUnitTestCases { get; set; }
     }
 }
