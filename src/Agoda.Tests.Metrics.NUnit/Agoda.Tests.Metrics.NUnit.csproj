@@ -10,9 +10,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Agoda.Testinglib.addins">
+    <Content Include="Agoda.Testinglib.addins" >
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+	  <PackageCopyToOutput>true</PackageCopyToOutput>
+	</Content>
   </ItemGroup>
 
 	<ItemGroup>
