@@ -6,11 +6,6 @@ namespace Agoda.Tests.Metrics.NUnit.Tests;
 [TestFixture]
 public class NUnitTestCaseConverterTests
 {
-    public NUnitTestCaseConverterTests()
-    {
-		// For testing locally
-        //Environment.SetEnvironmentVariable("NUNIT_METRICS_ES_ENDPOINT", "http://localhost:5000/dotnet/nunit");
-    }
     [Test]
     public void WhenInitTestCaseConverter_ShouldPopulateListOfTestCasesCorrectly()
     {

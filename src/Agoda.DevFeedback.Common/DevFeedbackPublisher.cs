@@ -37,8 +37,8 @@ namespace Agoda.DevFeedback.Common
             }
         }
 
-        //private const string BASE_URL = "http://compilation-metrics/";
-        private const string BASE_URL = "http://localhost:5000/";
+        private const string BASE_URL = "http://compilation-metrics/";
+        //private const string BASE_URL = "http://localhost:5000/";
         static string GetApiEndpoint(string apiEndpoint)
         {
             if (string.IsNullOrEmpty(apiEndpoint))
