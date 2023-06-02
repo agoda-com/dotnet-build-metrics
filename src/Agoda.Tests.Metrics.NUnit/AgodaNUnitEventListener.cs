@@ -19,7 +19,8 @@ namespace Agoda.Tests.Metrics.NUnit
             {
                 var xmlConverter = new NUnitXmlEventConverter(report);
 
-                if(xmlConverter.TestCases.Count == 0) return;
+                if (xmlConverter.TestCases.Count == 0) return;
+                if (!report.StartsWith("<test-run")) return;
 
                 var gitContext = GitContextReader.GetGitContext();
 
