@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+	  <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Agoda.Testinglib.addins" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Agoda.Testinglib.addins" >
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  <PackageCopyToOutput>true</PackageCopyToOutput>
+	</Content>
+  </ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Agoda.Analyzers" Version="1.0.523">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="NUnit.Engine" Version="3.16.3" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Agoda.DevFeedback.Common\Agoda.DevFeedback.Common.csproj" />
+	</ItemGroup>
+</Project>

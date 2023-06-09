@@ -54,7 +54,6 @@ jobs:
     needs: build
     name: Deploy Packages
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master'
     steps:
       - name: Download Package artifact
         uses: actions/download-artifact@master
@@ -79,6 +78,7 @@ jobs:
   release:
     needs: deploy
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
     steps:
     - name: Create Draft Release
       id: create_release
