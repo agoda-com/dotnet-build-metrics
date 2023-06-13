@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Agoda.DevFeedback.Common\Agoda.DevFeedback.Common.csproj" />
     <ProjectReference Include="..\Agoda.Tests.Metrics\Agoda.Tests.Metrics.csproj" />
   </ItemGroup>
 

@@ -1,6 +1,6 @@
 ﻿using System.Xml;
 using System.Xml.Serialization;
-
+using Agoda.DevFeedback.Common;
 using Agoda.Tests.Metrics.xUnit.Models;
 
 namespace Agoda.Tests.Metrics.xUnit
@@ -34,7 +34,7 @@ namespace Agoda.Tests.Metrics.xUnit
         /// <summary>
         /// Information about the Git environment for the project
         /// </summary>
-        public GitHelper.GitContext GitContext { get; private set; }
+        public GitContext GitContext { get; private set; }
 
         /// <summary>
         /// The collection of suites
@@ -63,7 +63,7 @@ namespace Agoda.Tests.Metrics.xUnit
         public TestResultsBuilder()
         {
             HostContext = new HostContext();
-            GitContext = GitHelper.GitContextReader.GetGitContext();
+            GitContext = GitContextReader.GetGitContext();
             // For CI check if the 'CI' environment variable exists
             InsideCI = Environment.GetEnvironmentVariable("CI") != null;
             // Allow override of default endpoint
