@@ -7,7 +7,7 @@ namespace Agoda.Tests.Metrics.xUnit
     {
         IMessageBus _messageBus;
         IMessageSink _messageSink;
-        TestSuiteReporter? _reporter;
+        TestResultsBuilder? _builder;
 
         /// <summary>
         /// Indicate we received a message for the test case
@@ -27,11 +27,11 @@ namespace Agoda.Tests.Metrics.xUnit
         /// <summary>
         /// Constructor that wraps an existing MessageBus
         /// </summary>
-        public AgodaMessageBus(IMessageBus messageBus, TestSuiteReporter? reporter, IMessageSink messageSink)
+        public AgodaMessageBus(IMessageBus messageBus, TestResultsBuilder? builder, IMessageSink messageSink)
         {
             _messageBus = messageBus;
             _messageSink = messageSink;
-            _reporter = reporter;
+            _builder = builder;
         }
 
         public void Dispose()
@@ -49,7 +49,7 @@ namespace Agoda.Tests.Metrics.xUnit
             switch (message)
             {
                 case TestPassed testPassed:
-                    _reporter?.ReportSuccess(
+                    _builder?.ReportSuccess(
                         testPassed.Test.DisplayName.Substring(testPassed.Test.TestCase.TestMethod.TestClass.Class.Name.Length + 1),
                         testPassed.Test.TestCase.TestMethod.TestClass.Class.Name,
                         testPassed.ExecutionTime

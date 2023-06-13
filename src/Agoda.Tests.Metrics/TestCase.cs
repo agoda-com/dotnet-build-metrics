@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Xml.Serialization;
 
-namespace Agoda.Tests.Metrics.NUnit
+namespace Agoda.Tests.Metrics
 {
     [XmlRoot(ElementName = "test-case")]
     public class TestCase
