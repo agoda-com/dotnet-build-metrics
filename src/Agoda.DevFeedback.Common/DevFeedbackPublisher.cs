@@ -20,7 +20,7 @@ namespace Agoda.DevFeedback.Common
                 case DevLocalDataType.Build:
                     targetEndpoint = GetApiEndpoint(apiEndpoint);
                     break;
-                case DevLocalDataType.NUint:
+                case DevLocalDataType.NUnit:
                     targetEndpoint = GetNunitApiEndpoint(apiEndpoint);
                     break;
                 default:

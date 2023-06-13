@@ -36,7 +36,7 @@ namespace Agoda.Tests.Metrics.xUnit
                     GitContextReader.GetGitContext(),
                     _testResults
                     );
-            DevFeedbackPublisher.Publish(null, payload, DevLocalDataType.NUint);
+            DevFeedbackPublisher.Publish(null, payload, DevLocalDataType.NUnit);
         }
 
         /// <summary>

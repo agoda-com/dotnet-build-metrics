@@ -29,7 +29,7 @@ namespace Agoda.Tests.Metrics.NUnit
                     gitContext,
                     xmlConverter.TestCases
                 );
-                DevFeedbackPublisher.Publish(null, data, DevLocalDataType.NUint);
+                DevFeedbackPublisher.Publish(null, data, DevLocalDataType.NUnit);
             }
             catch (Exception e)
             {
