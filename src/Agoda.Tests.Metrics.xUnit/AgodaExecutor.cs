@@ -25,8 +25,7 @@ namespace Agoda.Tests.Metrics.xUnit
             try
             {
                 await assemblyRunner.RunAsync();
-                var results = _builder.Publish();
-                _messageSink.OnMessage(new DiagnosticMessage(results ?? "was null"));
+                _builder.Publish();
             }
             catch (Exception ex)
             {

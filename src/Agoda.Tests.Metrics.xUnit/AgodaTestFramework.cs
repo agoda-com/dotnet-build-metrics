@@ -20,7 +20,7 @@ namespace Agoda.Tests.Metrics.xUnit
         {
             _builder = new TestResultsBuilder();
             _messageSink = messageSink;
-            _messageSink.OnMessage(new DiagnosticMessage($"Using AgodaTestFramework: InsideCI = {_builder.InsideCI}, Repository = {_builder.GitContext.RepositoryUrl}, Branch = {_builder.GitContext.BranchName}"));
+            _messageSink.OnMessage(new DiagnosticMessage("Using AgodaTestFramework"));
         }
 
         /// <summary>

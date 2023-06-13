@@ -50,7 +50,10 @@ namespace Agoda.Tests.Metrics.xUnit
             {
                 case TestPassed testPassed:
                     _builder?.ReportSuccess(
-                        testPassed.Test.DisplayName.Substring(testPassed.Test.TestCase.TestMethod.TestClass.Class.Name.Length + 1),
+                        testPassed.Test.TestCase.UniqueID,
+                        testPassed.Test.DisplayName,
+                        $"{testPassed.Test.TestCase.TestMethod.TestClass.Class.Name}.{testPassed.Test.TestCase.TestMethod.Method.Name}",
+                        testPassed.Test.TestCase.TestMethod.Method.Name,
                         testPassed.Test.TestCase.TestMethod.TestClass.Class.Name,
                         testPassed.ExecutionTime
                         );
