@@ -1,4 +1,6 @@
-﻿namespace Agoda.Tests.Metrics
+﻿using System;
+
+namespace Agoda.Tests.Metrics
 {
     /// <summary>
     /// Provide information about the host we are running on
