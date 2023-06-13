@@ -11,7 +11,7 @@ public class NUnitTestCasePayloadTests
     [Test]
     public void WhenInit_ShouldHaveDefaultVarsFromEnvironment()
     {
-        var underTest = new NUnitTestCasePayload(null,Substitute.For<GitContext>(), new List<TestCase>());
+        var underTest = new TestCasePayload(null,Substitute.For<GitContext>(), new List<TestCase>());
 
         underTest.Id.ShouldNotBeNull();
         underTest.UserName.ShouldBe(Environment.UserName);

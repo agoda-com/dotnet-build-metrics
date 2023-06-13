@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using Agoda.DevFeedback.Common;
 
-namespace Agoda.Tests.Metrics.NUnit
+namespace Agoda.Tests.Metrics
 {
-    public class NUnitTestCasePayload
+    public class TestCasePayload
     {
-        public NUnitTestCasePayload(string metricsVersion, GitContext gitContext, IList<TestCase> xmlConverterTestCases)
+        public TestCasePayload(string metricsVersion, GitContext gitContext, IList<TestCase> testCases)
         {
             Id = Guid.NewGuid().ToString();
             UserName = Environment.UserName;
@@ -24,7 +24,7 @@ namespace Agoda.Tests.Metrics.NUnit
             Repository = gitContext.RepositoryUrl;
             RepositoryName = gitContext.RepositoryName;
             Branch = gitContext.BranchName;
-            NUnitTestCases = xmlConverterTestCases.ToList();
+            NUnitTestCases = testCases.ToList();
             IsDebuggerAttached = System.Diagnostics.Debugger.IsAttached;
         }
 

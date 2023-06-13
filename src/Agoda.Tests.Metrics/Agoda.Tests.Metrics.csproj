@@ -4,4 +4,8 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Agoda.DevFeedback.Common\Agoda.DevFeedback.Common.csproj" />
+  </ItemGroup>
+
 </Project>
