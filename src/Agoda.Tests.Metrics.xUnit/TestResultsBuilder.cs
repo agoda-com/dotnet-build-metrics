@@ -42,14 +42,7 @@ namespace Agoda.Tests.Metrics.xUnit
         /// <summary>
         /// Report a successful test
         /// </summary>
-        internal void ReportSkipped(string name, string classname, decimal time)
-        {
-        }
-
-        /// <summary>
-        /// Report a successful test
-        /// </summary>
-        internal void ReportSuccess(string id, string name, string fullname, string methodname, string classname, decimal time)
+        internal void ReportSkipped(string id, string name, string fullname, string methodname, string classname, double duration)
         {
             var testCase = new TestCase()
             {
@@ -58,6 +51,29 @@ namespace Agoda.Tests.Metrics.xUnit
                 Fullname = fullname,
                 Methodname = methodname,
                 Classname = classname,
+                Result = "Skipped",
+                Duration = duration
+            };
+            lock (BuilderLock)
+            {
+                _testResults.Add(testCase);
+            }
+        }
+
+        /// <summary>
+        /// Report a successful test
+        /// </summary>
+        internal void ReportSuccess(string id, string name, string fullname, string methodname, string classname, double duration)
+        {
+            var testCase = new TestCase()
+            {
+                Id = id,
+                Name = name,
+                Fullname = fullname,
+                Methodname = methodname,
+                Classname = classname,
+                Result = "Passed",
+                Duration = duration
             };
             lock (BuilderLock)
             {
@@ -68,15 +84,22 @@ namespace Agoda.Tests.Metrics.xUnit
         /// <summary>
         /// Report a failed test
         /// </summary>
-        internal void ReportFailure(string name, string classname, decimal time, string message, string? text = null)
+        internal void ReportFailure(string id, string name, string fullname, string methodname, string classname, double duration)
         {
-        }
-
-        /// <summary>
-        /// Report an error
-        /// </summary>
-        internal void ReportError(string name, string classname, decimal time, string message, string? text = null)
-        {
+            var testCase = new TestCase()
+            {
+                Id = id,
+                Name = name,
+                Fullname = fullname,
+                Methodname = methodname,
+                Classname = classname,
+                Result = "Failed",
+                Duration = duration
+            };
+            lock (BuilderLock)
+            {
+                _testResults.Add(testCase);
+            }
         }
     }
 }

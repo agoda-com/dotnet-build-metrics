@@ -55,18 +55,29 @@ namespace Agoda.Tests.Metrics.xUnit
                         $"{testPassed.Test.TestCase.TestMethod.TestClass.Class.Name}.{testPassed.Test.TestCase.TestMethod.Method.Name}",
                         testPassed.Test.TestCase.TestMethod.Method.Name,
                         testPassed.Test.TestCase.TestMethod.TestClass.Class.Name,
-                        testPassed.ExecutionTime
+                        (double)testPassed.ExecutionTime
                         );
                     break;
                 case TestFailed testFailed:
-                    Diagnostic($"{message} - {testFailed.Test.DisplayName}");
+                    _builder?.ReportFailure(
+                        testFailed.Test.TestCase.UniqueID,
+                        testFailed.Test.DisplayName,
+                        $"{testFailed.Test.TestCase.TestMethod.TestClass.Class.Name}.{testFailed.Test.TestCase.TestMethod.Method.Name}",
+                        testFailed.Test.TestCase.TestMethod.Method.Name,
+                        testFailed.Test.TestCase.TestMethod.TestClass.Class.Name,
+                        (double)testFailed.ExecutionTime
+                        );
                     break;
                 case TestSkipped testSkipped:
-                    Diagnostic($"{message} - {testSkipped.Test.DisplayName}");
+                    _builder?.ReportFailure(
+                        testSkipped.Test.TestCase.UniqueID,
+                        testSkipped.Test.DisplayName,
+                        $"{testSkipped.Test.TestCase.TestMethod.TestClass.Class.Name}.{testSkipped.Test.TestCase.TestMethod.Method.Name}",
+                        testSkipped.Test.TestCase.TestMethod.Method.Name,
+                        testSkipped.Test.TestCase.TestMethod.TestClass.Class.Name,
+                        (double)testSkipped.ExecutionTime
+                        );
                     break;
-//                default:
-//                    _messageSink.OnMessage(new DiagnosticMessage($"{message}"));
-//                    break;
             }
             return _messageBus.QueueMessage(message);
         }
