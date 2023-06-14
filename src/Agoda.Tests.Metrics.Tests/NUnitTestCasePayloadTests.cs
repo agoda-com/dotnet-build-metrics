@@ -3,7 +3,7 @@ using NSubstitute;
 using NUnit.Framework;
 using Shouldly;
 
-namespace Agoda.Tests.Metrics.NUnit.Tests;
+namespace Agoda.Tests.Metrics.Tests;
 
 [TestFixture]
 public class NUnitTestCasePayloadTests
