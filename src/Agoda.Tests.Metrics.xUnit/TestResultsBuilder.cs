@@ -1,7 +1,5 @@
-﻿using System.Xml;
-using System.Xml.Serialization;
+﻿using System.Collections.Generic;
 using Agoda.DevFeedback.Common;
-using Agoda.Tests.Metrics;
 
 namespace Agoda.Tests.Metrics.xUnit
 {
@@ -16,7 +14,7 @@ namespace Agoda.Tests.Metrics.xUnit
         /// <summary>
         /// The collection of suites
         /// </summary>
-        private List<TestCase> _testResults = new();
+        private List<TestCase> _testResults = new List<TestCase>();
 
         /// <summary>
         /// Constructor

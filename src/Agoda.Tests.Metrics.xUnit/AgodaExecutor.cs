@@ -1,4 +1,6 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
 using Xunit.Abstractions;
 using Xunit.Sdk;
 
@@ -21,9 +23,9 @@ namespace Agoda.Tests.Metrics.xUnit
 
         protected override async void RunTestCases(IEnumerable<IXunitTestCase> testCases, IMessageSink executionMessageSink, ITestFrameworkExecutionOptions executionOptions)
         {
-            using var assemblyRunner = new AgodaAssemblyRunner(TestAssembly, testCases, DiagnosticMessageSink, executionMessageSink, executionOptions, _builder);
             try
             {
+                var assemblyRunner = new AgodaAssemblyRunner(TestAssembly, testCases, DiagnosticMessageSink, executionMessageSink, executionOptions, _builder);
                 await assemblyRunner.RunAsync();
                 _builder.Publish();
             }

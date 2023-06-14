@@ -1,4 +1,7 @@
-﻿using Xunit.Abstractions;
+﻿using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using Xunit.Abstractions;
 using Xunit.Sdk;
 
 namespace Agoda.Tests.Metrics.xUnit
@@ -8,7 +11,7 @@ namespace Agoda.Tests.Metrics.xUnit
     /// </summary>
     internal class AgodaAssemblyRunner : XunitTestAssemblyRunner
     {
-        private readonly TestResultsBuilder? _builder;
+        private readonly TestResultsBuilder _builder;
 
         public AgodaAssemblyRunner(ITestAssembly testAssembly, IEnumerable<IXunitTestCase> testCases, IMessageSink diagnosticMessageSink, IMessageSink executionMessageSink, ITestFrameworkExecutionOptions executionOptions, TestResultsBuilder builder)
             : base(testAssembly, testCases, diagnosticMessageSink, executionMessageSink, executionOptions)

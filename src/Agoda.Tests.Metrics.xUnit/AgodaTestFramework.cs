@@ -1,7 +1,6 @@
 ﻿using System.Reflection;
 using Xunit.Abstractions;
 using Xunit.Sdk;
-using Agoda.Tests.Metrics;
 
 namespace Agoda.Tests.Metrics.xUnit
 {

@@ -7,7 +7,7 @@ namespace Agoda.Tests.Metrics.xUnit
     {
         IMessageBus _messageBus;
         IMessageSink _messageSink;
-        TestResultsBuilder? _builder;
+        TestResultsBuilder _builder;
 
         /// <summary>
         /// Indicate we received a message for the test case
@@ -27,7 +27,7 @@ namespace Agoda.Tests.Metrics.xUnit
         /// <summary>
         /// Constructor that wraps an existing MessageBus
         /// </summary>
-        public AgodaMessageBus(IMessageBus messageBus, TestResultsBuilder? builder, IMessageSink messageSink)
+        public AgodaMessageBus(IMessageBus messageBus, TestResultsBuilder builder, IMessageSink messageSink)
         {
             _messageBus = messageBus;
             _messageSink = messageSink;
