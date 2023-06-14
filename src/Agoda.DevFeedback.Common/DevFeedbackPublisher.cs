@@ -9,7 +9,7 @@ namespace Agoda.DevFeedback.Common
     {
         private const string BASE_URL = "http://compilation-metrics/";
 
-        public static void PublishBuildData(object data)
+        public static void PublishBuildData(DevFeedbackData data)
         {
             var targetEndpoint = GetApiEndpoint();
             var content = new StringContent(JsonSerializer.Serialize(data), Encoding.UTF8, "application/json");
