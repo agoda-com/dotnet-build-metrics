@@ -23,11 +23,6 @@ namespace Agoda.Builds.Metrics
         public string EndDateTime { get; set; }
 
         /// <summary>
-        /// Seems not to be set from anywhere.
-        /// </summary>
-        public string ApiEndPoint { get; set; }
-
-        /// <summary>
         /// Set by the Task.Execute method.
         /// Used by the 'CaptureBuildTime' build event.
         /// </summary>
@@ -50,7 +45,7 @@ namespace Agoda.Builds.Metrics
                     gitContext: gitContext
                 );
 
-                DevFeedbackPublisher.Publish(ApiEndPoint, data);
+                DevFeedbackPublisher.PublishBuildData(data);
             }
             catch (GitContextException ex)
             {

@@ -18,7 +18,7 @@ namespace Agoda.DevFeedback.AspNetStartup
                 gitContext: gitContext
             );
 
-            DevFeedbackPublisher.Publish(apiEndpoint: null, result);
+            DevFeedbackPublisher.PublishBuildData(result);
         }
     }
 }
