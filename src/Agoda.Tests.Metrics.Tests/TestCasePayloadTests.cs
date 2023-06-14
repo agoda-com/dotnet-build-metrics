@@ -1,12 +1,11 @@
 ﻿using Agoda.DevFeedback.Common;
 using NSubstitute;
-using NUnit.Framework;
 using Shouldly;
 
 namespace Agoda.Tests.Metrics.Tests;
 
 [TestFixture]
-public class NUnitTestCasePayloadTests
+public class TestCasePayloadTests
 {
     [Test]
     public void WhenInit_ShouldHaveDefaultVarsFromEnvironment()
