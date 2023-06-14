@@ -14,8 +14,8 @@ namespace Agoda.DevFeedback.Common
         /// </summary>
         private static Dictionary<DevLocalDataType, List<string>> _dataTypeEndpoints = new Dictionary<DevLocalDataType, List<string>>()
         {
-            { DevLocalDataType.Build, new List<string>() { "dotnet", "" } },
-            { DevLocalDataType.NUint, new List<string>() { "dotnet/nunit", "" } }
+            { DevLocalDataType.Build, new List<string>() { "dotnet", "BUILD_METRICS_ES_ENDPOINT" } },
+            { DevLocalDataType.NUint, new List<string>() { "dotnet/nunit", "NUNIT_METRICS_ES_ENDPOINT" } }
         };
 
         // Default URL
