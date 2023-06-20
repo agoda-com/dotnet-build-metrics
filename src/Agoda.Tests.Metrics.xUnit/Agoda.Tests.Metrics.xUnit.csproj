@@ -15,10 +15,4 @@
     <ProjectReference Include="..\Agoda.Tests.Metrics\Agoda.Tests.Metrics.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="xunit.runner.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
 </Project>

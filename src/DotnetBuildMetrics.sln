@@ -17,7 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Agoda.Tests.Metrics", "Agod
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Agoda.Tests.Metrics.xUnit", "Agoda.Tests.Metrics.xUnit\Agoda.Tests.Metrics.xUnit.csproj", "{449942D5-1D87-42A9-A74F-0BA5FB9FAC97}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Agoda.Tests.Metrics.Tests", "Agoda.Tests.Metrics.Tests\Agoda.Tests.Metrics.Tests.csproj", "{80645931-22CF-4A46-B965-544E7B5D7855}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Agoda.Tests.Metrics.Tests", "Agoda.Tests.Metrics.Tests\Agoda.Tests.Metrics.Tests.csproj", "{80645931-22CF-4A46-B965-544E7B5D7855}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Agoda.Tests.Metrics.xUnit.Tests", "Agoda.Tests.MEtrics.xUnit.Tests\Agoda.Tests.Metrics.xUnit.Tests.csproj", "{66B8CAFD-5EB6-4FF4-B2F5-6D9CE0A71396}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +59,10 @@ Global
 		{80645931-22CF-4A46-B965-544E7B5D7855}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{80645931-22CF-4A46-B965-544E7B5D7855}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{80645931-22CF-4A46-B965-544E7B5D7855}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66B8CAFD-5EB6-4FF4-B2F5-6D9CE0A71396}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66B8CAFD-5EB6-4FF4-B2F5-6D9CE0A71396}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66B8CAFD-5EB6-4FF4-B2F5-6D9CE0A71396}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66B8CAFD-5EB6-4FF4-B2F5-6D9CE0A71396}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

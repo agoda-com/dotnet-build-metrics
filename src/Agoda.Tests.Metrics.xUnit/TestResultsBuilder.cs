@@ -28,13 +28,17 @@ namespace Agoda.Tests.Metrics.xUnit
         /// </summary>
         public void Publish()
         {
-            // Create the payload
-            var payload = new TestCasePayload(
-                    typeof(TestResultsBuilder).Assembly.GetName().Version.ToString(),
-                    GitContextReader.GetGitContext(),
-                    _testResults
-                    );
-            DevFeedbackPublisher.Publish(null, payload, DevLocalDataType.NUnit);
+            lock (BuilderLock)
+            {
+                // Create the payload
+                var payload = new TestCasePayload(
+                        typeof(TestResultsBuilder).Assembly.GetName().Version.ToString(),
+                        GitContextReader.GetGitContext(),
+                        _testResults
+                        );
+                // Publish it
+                DevFeedbackPublisher.Publish(null, payload, DevLocalDataType.NUnit);
+            }
         }
 
         /// <summary>

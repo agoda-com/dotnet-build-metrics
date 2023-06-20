@@ -28,6 +28,7 @@ namespace Agoda.Tests.Metrics.xUnit
                 var assemblyRunner = new AgodaAssemblyRunner(TestAssembly, testCases, DiagnosticMessageSink, executionMessageSink, executionOptions, _builder);
                 await assemblyRunner.RunAsync();
                 _builder.Publish();
+                _messageSink.OnMessage(new DiagnosticMessage("Published test results"));
             }
             catch (Exception ex)
             {
