@@ -12,8 +12,8 @@ namespace Agoda.Tests.Metrics
             Id = Guid.NewGuid().ToString();
             UserName = Environment.UserName;
             
-            if(!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("GITLAB_USER_ID")))
-                UserName = Environment.GetEnvironmentVariable("GITLAB_USER_ID");
+            if(!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("GITLAB_USER_LOGIN")))
+                UserName = Environment.GetEnvironmentVariable("GITLAB_USER_LOGIN");
 
             CpuCount = Environment.ProcessorCount;
 #pragma warning disable AG0035
