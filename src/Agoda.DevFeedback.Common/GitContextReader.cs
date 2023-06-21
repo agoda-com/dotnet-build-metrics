@@ -42,6 +42,7 @@ namespace Agoda.DevFeedback.Common
                     WorkingDirectory = Environment.CurrentDirectory,
                     RedirectStandardInput = true,
                     RedirectStandardOutput = true,
+                    RedirectStandardError = true,
                     Arguments = args
                 }
             };
