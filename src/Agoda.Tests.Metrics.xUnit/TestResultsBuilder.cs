@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Agoda.DevFeedback.Common;
+using Xunit.Abstractions;
+using Xunit.Sdk;
 
 namespace Agoda.Tests.Metrics.xUnit
 {
@@ -11,16 +14,26 @@ namespace Agoda.Tests.Metrics.xUnit
         ///--- Used for synchronization
         private static object BuilderLock = new object();
 
-        /// <summary>
-        /// The collection of suites
-        /// </summary>
+        //--- State
         private List<TestCase> _testResults = new List<TestCase>();
+        private IMessageSink _messageSink;
+        private GitContext _gitContext;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public TestResultsBuilder()
+        public TestResultsBuilder(IMessageSink messageSink)
         {
+            _messageSink = messageSink;
+            _gitContext = new GitContext();
+        }
+
+        /// <summary>
+        /// Generate a diagnostic message
+        /// </summary>
+        public void Diagnostic(string message)
+        {
+            _messageSink?.OnMessage(new DiagnosticMessage(message ?? "** NO MESSAGE **"));
         }
 
         /// <summary>
@@ -28,17 +41,21 @@ namespace Agoda.Tests.Metrics.xUnit
         /// </summary>
         public void Publish()
         {
+            Diagnostic("BEGIN: Publish()");
             lock (BuilderLock)
             {
                 // Create the payload
+                Diagnostic("Creating payload");
                 var payload = new TestCasePayload(
                         typeof(TestResultsBuilder).Assembly.GetName().Version.ToString(),
-                        GitContextReader.GetGitContext(),
+                        _gitContext,
                         _testResults
                         );
                 // Publish it
+                Diagnostic("Calling DevFeedbackPublisher");
                 DevFeedbackPublisher.Publish(null, payload, DevLocalDataType.NUnit);
             }
+            Diagnostic("END: Publish()");
         }
 
         /// <summary>

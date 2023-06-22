@@ -26,4 +26,10 @@
     <ProjectReference Include="..\Agoda.Tests.Metrics.xUnit\Agoda.Tests.Metrics.xUnit.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="xunit.runner.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

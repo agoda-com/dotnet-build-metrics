@@ -10,22 +10,20 @@ namespace Agoda.Tests.Metrics.xUnit
     public class AgodaTestFramework : XunitTestFramework
     {
         private readonly TestResultsBuilder _builder;
-        private readonly IMessageSink _messageSink;
 
         /// <summary>
         /// Constructor with diagnostic message output
         /// </summary>
         public AgodaTestFramework(IMessageSink messageSink) : base(messageSink)
         {
-            _builder = new TestResultsBuilder();
-            _messageSink = messageSink;
-            _messageSink.OnMessage(new DiagnosticMessage("Using AgodaTestFramework"));
+            _builder = new TestResultsBuilder(messageSink);
+            _builder.Diagnostic("Using AgodaTestFramework");
         }
 
         /// <summary>
         /// Use our custom executor to detect and run all tests
         /// </summary>
         protected override ITestFrameworkExecutor CreateExecutor(AssemblyName assemblyName)
-            => new AgodaExecutor(assemblyName, SourceInformationProvider, DiagnosticMessageSink, _builder, _messageSink);
+            => new AgodaExecutor(assemblyName, SourceInformationProvider, DiagnosticMessageSink, _builder);
     }
 }
