@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Globalization;
-using System.Linq;
 using System.Xml;
 using System.Xml.Serialization;
 
@@ -51,7 +50,7 @@ namespace Agoda.Tests.Metrics.NUnit
         [XmlAttribute(AttributeName = "start-time")]
         public string StartTimeRaw
         {
-            get => StartTime.ToString("yyyy-MM-ddTHH:mm:ss");
+            get => StartTime.ToString("yyyy-MM-ddTHH:mm:ss.fffffff");
             set => StartTime = DateTime.TryParseExact(value, Formats, CultureInfo.InvariantCulture, DateTimeStyles.None, out var result) ? result : DateTime.MinValue;
         }
 
