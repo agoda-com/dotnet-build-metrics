@@ -54,13 +54,17 @@ public class NUnitTestCaseConverterTests
 ";
         var result = new NUnitXmlEventConverter(report);
 		result.TestCases.Count.ShouldBe(4);
+		
         for (int i = 1; i <= 4; i++)
         {
             result.TestCases[i - 1].Name.ShouldBe($"{i}WhenOneIsOne_ItSHouldBeOne",customMessage:$"Name on {i}");
             result.TestCases[i - 1].Id.ShouldBe($"0-100{i}", customMessage: $"Id on {i}");
             result.TestCases[i - 1].Fullname.ShouldBe($"Agoda.TestingLib.Tests.UnitTest{(i+1) / 2}.{i}WhenOneIsOne_ItSHouldBeOne", customMessage: $"Fullname on {i}");
 			result.TestCases[i - 1].Duration.ShouldBe(0.033255, customMessage: $"Duration on {i}");
+			result.TestCases[i - 1].Duration.ShouldBe(0.033255, customMessage: $"Duration on {i}");
+			
+			var duration = (result.TestCases[i - 1].EndTime - result.TestCases[i - 1].StartTime).TotalSeconds;
+			duration.ShouldBe(0.0331569, customMessage: $"Duration on {i}");
         }
-		
     }
 }
