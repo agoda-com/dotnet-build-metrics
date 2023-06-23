@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Globalization;
+using System.Xml;
 using System.Xml.Serialization;
 
 namespace Agoda.Tests.Metrics.NUnit
@@ -31,11 +33,22 @@ namespace Agoda.Tests.Metrics.NUnit
         [XmlAttribute(AttributeName = "result")]
         public string Result { get; set; }
 
-        [XmlAttribute(AttributeName = "start-time")]
         public DateTime StartTime { get; set; }
 
-        [XmlAttribute(AttributeName = "end-time")]
+        [XmlAttribute(AttributeName = "start-time")]
+        public string StartTimeRaw
+        {
+            set => StartTime = DateTime.TryParseExact(value, new[] { "yyyy-MM-dd HH:mm:ssZ", "yyyy-MM-ddTHH:mm:ss"}, CultureInfo.InvariantCulture, DateTimeStyles.None, out var result) ? result : DateTime.MinValue;
+        }
+
+
         public DateTime EndTime { get; set; }
+
+        [XmlAttribute(AttributeName = "end-time")]
+        public string EndTimeRaw
+        {
+            set => StartTime = DateTime.TryParseExact(value, new[] { "yyyy-MM-dd HH:mm:ssZ", "yyyy-MM-ddTHH:mm:ss"}, CultureInfo.InvariantCulture, DateTimeStyles.None, out var result) ? result : DateTime.MinValue;
+        }
 
         [XmlAttribute(AttributeName = "duration")]
         public double Duration { get; set; }
