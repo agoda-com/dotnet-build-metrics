@@ -8,6 +8,17 @@ namespace Agoda.Tests.Metrics.NUnit
     [XmlRoot(ElementName = "test-case")]
     public class TestCase
     {
+        private static readonly string[] Formats =
+        {
+            "yyyy-MM-ddTHH:mm:ss.fffffffZ",
+            "yyyy-MM-dd HH:mm:ss.fffffffZ",
+            "yyyy-MM-ddTHH:mm:ss.fffffff",
+            "yyyy-MM-dd HH:mm:ss.fffffff",
+            "yyyy-MM-ddTHH:mm:ssZ",
+            "yyyy-MM-dd HH:mm:ssZ",
+            "yyyy-MM-ddTHH:mm:ss",
+            "yyyy-MM-dd HH:mm:ss",
+        };
 
         [XmlAttribute(AttributeName = "id")]
         public string Id { get; set; }
@@ -33,21 +44,24 @@ namespace Agoda.Tests.Metrics.NUnit
         [XmlAttribute(AttributeName = "result")]
         public string Result { get; set; }
 
+        [XmlIgnore]
         public DateTime StartTime { get; set; }
 
         [XmlAttribute(AttributeName = "start-time")]
         public string StartTimeRaw
         {
-            set => StartTime = DateTime.TryParseExact(value, new[] { "yyyy-MM-dd HH:mm:ssZ", "yyyy-MM-ddTHH:mm:ss"}, CultureInfo.InvariantCulture, DateTimeStyles.None, out var result) ? result : DateTime.MinValue;
+            get => StartTime.ToString("yyyy-MM-ddTHH:mm:ss.fffffff");
+            set => StartTime = DateTime.TryParseExact(value, Formats, CultureInfo.InvariantCulture, DateTimeStyles.None, out var result) ? result : DateTime.MinValue;
         }
 
-
+        [XmlIgnore]
         public DateTime EndTime { get; set; }
 
         [XmlAttribute(AttributeName = "end-time")]
         public string EndTimeRaw
         {
-            set => StartTime = DateTime.TryParseExact(value, new[] { "yyyy-MM-dd HH:mm:ssZ", "yyyy-MM-ddTHH:mm:ss"}, CultureInfo.InvariantCulture, DateTimeStyles.None, out var result) ? result : DateTime.MinValue;
+            get => EndTime.ToString("yyyy-MM-dd HH:mm:ss.fffffff");
+            set => EndTime = DateTime.TryParseExact(value, Formats, CultureInfo.InvariantCulture, DateTimeStyles.None, out var result) ? result : DateTime.MinValue;
         }
 
         [XmlAttribute(AttributeName = "duration")]
