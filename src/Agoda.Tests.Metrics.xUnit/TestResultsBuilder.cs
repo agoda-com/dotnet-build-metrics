@@ -1,8 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Net.Http;
+using System.Text.Json;
+using System.Text;
 using System.Threading.Tasks;
 using Agoda.DevFeedback.Common;
 using Xunit.Abstractions;
 using Xunit.Sdk;
+using System;
 
 namespace Agoda.Tests.Metrics.xUnit
 {
@@ -25,7 +29,7 @@ namespace Agoda.Tests.Metrics.xUnit
         public TestResultsBuilder(IMessageSink messageSink)
         {
             _messageSink = messageSink;
-            _gitContext = new GitContext();
+            _gitContext = GitContextReader.GetGitContext();
         }
 
         /// <summary>
@@ -41,21 +45,38 @@ namespace Agoda.Tests.Metrics.xUnit
         /// </summary>
         public void Publish()
         {
-            Diagnostic("BEGIN: Publish()");
             lock (BuilderLock)
             {
                 // Create the payload
-                Diagnostic("Creating payload");
                 var payload = new TestCasePayload(
                         typeof(TestResultsBuilder).Assembly.GetName().Version.ToString(),
                         _gitContext,
                         _testResults
                         );
                 // Publish it
-                Diagnostic("Calling DevFeedbackPublisher");
                 DevFeedbackPublisher.Publish(null, payload, DevLocalDataType.NUnit);
             }
-            Diagnostic("END: Publish()");
+        }
+
+        /// <summary>
+        /// Fill out the test case
+        /// </summary>
+        private TestCase CreateTestCase(string result, string id, string name, string fullname, string methodname, string classname, double duration)
+        {
+            var when = DateTime.UtcNow;
+            return new TestCase()
+            {
+                Id = id,
+                Name = name,
+                Fullname = fullname,
+                Methodname = methodname,
+                Runstate = "Runnable",
+                Classname = classname,
+                Result = result,
+                StartTime = when.AddSeconds(-duration),
+                Duration = duration,
+                EndTime = when
+            };
         }
 
         /// <summary>
@@ -63,16 +84,7 @@ namespace Agoda.Tests.Metrics.xUnit
         /// </summary>
         internal void ReportSkipped(string id, string name, string fullname, string methodname, string classname, double duration)
         {
-            var testCase = new TestCase()
-            {
-                Id = id,
-                Name = name,
-                Fullname = fullname,
-                Methodname = methodname,
-                Classname = classname,
-                Result = "Skipped",
-                Duration = duration
-            };
+            var testCase = CreateTestCase("Skipped", id, name, fullname, methodname, classname, duration);
             lock (BuilderLock)
             {
                 _testResults.Add(testCase);
@@ -84,16 +96,7 @@ namespace Agoda.Tests.Metrics.xUnit
         /// </summary>
         internal void ReportSuccess(string id, string name, string fullname, string methodname, string classname, double duration)
         {
-            var testCase = new TestCase()
-            {
-                Id = id,
-                Name = name,
-                Fullname = fullname,
-                Methodname = methodname,
-                Classname = classname,
-                Result = "Passed",
-                Duration = duration
-            };
+            var testCase = CreateTestCase("Passed", id, name, fullname, methodname, classname, duration);
             lock (BuilderLock)
             {
                 _testResults.Add(testCase);
@@ -105,16 +108,7 @@ namespace Agoda.Tests.Metrics.xUnit
         /// </summary>
         internal void ReportFailure(string id, string name, string fullname, string methodname, string classname, double duration)
         {
-            var testCase = new TestCase()
-            {
-                Id = id,
-                Name = name,
-                Fullname = fullname,
-                Methodname = methodname,
-                Classname = classname,
-                Result = "Failed",
-                Duration = duration
-            };
+            var testCase = CreateTestCase("Failed", id, name, fullname, methodname, classname, duration);
             lock (BuilderLock)
             {
                 _testResults.Add(testCase);

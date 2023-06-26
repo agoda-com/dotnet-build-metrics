@@ -26,7 +26,6 @@ namespace Agoda.Tests.Metrics.xUnit
                 _builder.Diagnostic("ENTER: RunTestCases");
                 var assemblyRunner = new AgodaAssemblyRunner(TestAssembly, testCases, DiagnosticMessageSink, executionMessageSink, executionOptions, _builder);
                 await assemblyRunner.RunAsync();
-                _builder.Publish();
                 _builder.Diagnostic("LEAVE: RunTestCases");
             }
             catch (Exception ex)

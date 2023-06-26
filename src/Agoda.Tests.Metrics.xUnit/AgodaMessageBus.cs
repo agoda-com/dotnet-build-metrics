@@ -58,6 +58,13 @@ namespace Agoda.Tests.Metrics.xUnit
                         (double)testSkipped.ExecutionTime
                         );
                     break;
+                case TestCollectionFinished testCollectionFinished:
+                    // Publish the results before passing the message on
+                    _builder.Publish();
+                    break;
+                default:
+                    _builder?.Diagnostic($"{message.GetType().Name}");
+                    break;
             }
             return _messageBus.QueueMessage(message);
         }
