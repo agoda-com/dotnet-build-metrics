@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
@@ -30,16 +29,8 @@ namespace Agoda.DevFeedback.Common
             using (var httpClient = new HttpClient())
             {
                 httpClient.Timeout = TimeSpan.FromSeconds(2);
-
-                //--- Dump to file for testing
-                var json = JsonSerializer.Serialize(data);
-                using (var writer = new StreamWriter("TestResults.json"))
-                    writer.Write(json);
-                //---
-
                 var content = new StringContent(JsonSerializer.Serialize(data), Encoding.UTF8, "application/json");
                 var response = httpClient.PostAsync(targetEndpoint, content).Result;
-
                 response.EnsureSuccessStatusCode();
             }
         }
