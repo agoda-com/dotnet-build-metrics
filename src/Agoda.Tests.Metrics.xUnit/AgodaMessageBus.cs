@@ -6,16 +6,14 @@ namespace Agoda.Tests.Metrics.xUnit
     internal class AgodaMessageBus : IMessageBus
     {
         IMessageBus _messageBus;
-        IMessageSink _messageSink;
         TestResultsBuilder _builder;
 
         /// <summary>
         /// Constructor that wraps an existing MessageBus
         /// </summary>
-        public AgodaMessageBus(IMessageBus messageBus, TestResultsBuilder builder, IMessageSink messageSink)
+        public AgodaMessageBus(IMessageBus messageBus, TestResultsBuilder builder)
         {
             _messageBus = messageBus;
-            _messageSink = messageSink;
             _builder = builder;
         }
 
@@ -63,7 +61,6 @@ namespace Agoda.Tests.Metrics.xUnit
                     _builder.Publish();
                     break;
                 default:
-                    _builder?.Diagnostic($"{message.GetType().Name}");
                     break;
             }
             return _messageBus.QueueMessage(message);

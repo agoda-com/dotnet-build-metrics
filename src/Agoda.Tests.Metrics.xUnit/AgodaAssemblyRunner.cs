@@ -21,7 +21,7 @@ namespace Agoda.Tests.Metrics.xUnit
 
         protected override Task<RunSummary> RunTestCollectionAsync(IMessageBus messageBus, ITestCollection testCollection, IEnumerable<IXunitTestCase> testCases, CancellationTokenSource cancellationTokenSource)
         {
-            var messageBusWrapper = new AgodaMessageBus(messageBus, _builder, DiagnosticMessageSink);
+            var messageBusWrapper = new AgodaMessageBus(messageBus, _builder);
             return new XunitTestCollectionRunner(testCollection, testCases, DiagnosticMessageSink, messageBusWrapper, TestCaseOrderer, new ExceptionAggregator(Aggregator), cancellationTokenSource).RunAsync();
         }
     }
