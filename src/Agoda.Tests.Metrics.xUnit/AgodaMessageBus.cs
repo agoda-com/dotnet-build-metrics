@@ -31,7 +31,7 @@ namespace Agoda.Tests.Metrics.xUnit
                 case TestPassed testPassed:
                     _builder?.ReportSuccess(
                         testPassed.Test.TestCase.UniqueID,
-                        testPassed.Test.DisplayName,
+                        testPassed.Test.TestCase.TestMethod.Method.Name,
                         $"{testPassed.Test.TestCase.TestMethod.TestClass.Class.Name}.{testPassed.Test.TestCase.TestMethod.Method.Name}",
                         testPassed.Test.TestCase.TestMethod.Method.Name,
                         testPassed.Test.TestCase.TestMethod.TestClass.Class.Name,
@@ -41,7 +41,7 @@ namespace Agoda.Tests.Metrics.xUnit
                 case TestFailed testFailed:
                     _builder?.ReportFailure(
                         testFailed.Test.TestCase.UniqueID,
-                        testFailed.Test.DisplayName,
+                        testFailed.Test.TestCase.TestMethod.Method.Name,
                         $"{testFailed.Test.TestCase.TestMethod.TestClass.Class.Name}.{testFailed.Test.TestCase.TestMethod.Method.Name}",
                         testFailed.Test.TestCase.TestMethod.Method.Name,
                         testFailed.Test.TestCase.TestMethod.TestClass.Class.Name,
@@ -51,7 +51,7 @@ namespace Agoda.Tests.Metrics.xUnit
                 case TestSkipped testSkipped:
                     _builder?.ReportFailure(
                         testSkipped.Test.TestCase.UniqueID,
-                        testSkipped.Test.DisplayName,
+                        testSkipped.Test.TestCase.TestMethod.Method.Name,
                         $"{testSkipped.Test.TestCase.TestMethod.TestClass.Class.Name}.{testSkipped.Test.TestCase.TestMethod.Method.Name}",
                         testSkipped.Test.TestCase.TestMethod.Method.Name,
                         testSkipped.Test.TestCase.TestMethod.TestClass.Class.Name,
