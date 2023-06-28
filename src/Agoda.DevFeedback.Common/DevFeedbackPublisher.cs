@@ -15,7 +15,7 @@ namespace Agoda.DevFeedback.Common
         private static Dictionary<DevLocalDataType, List<string>> _dataTypeEndpoints = new Dictionary<DevLocalDataType, List<string>>()
         {
             { DevLocalDataType.Build, new List<string>() { "dotnet", "BUILD_METRICS_ES_ENDPOINT" } },
-            { DevLocalDataType.NUint, new List<string>() { "dotnet/nunit", "NUNIT_METRICS_ES_ENDPOINT" } }
+            { DevLocalDataType.NUnit, new List<string>() { "dotnet/nunit", "NUNIT_METRICS_ES_ENDPOINT" } }
         };
 
         // Default URL
@@ -35,7 +35,6 @@ namespace Agoda.DevFeedback.Common
                 apiEndpoint = Environment.GetEnvironmentVariable(endpointInfo[1]);
             }
             return string.IsNullOrEmpty(apiEndpoint) ? $"{BASE_URL}{endpointInfo[0]}" : apiEndpoint;
-                case DevLocalDataType.NUnit:
         }
 
         /// <summary>
