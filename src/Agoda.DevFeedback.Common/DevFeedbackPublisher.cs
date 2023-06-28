@@ -59,13 +59,5 @@ namespace Agoda.DevFeedback.Common
         {
             PublishAsync(apiEndpoint, data, devLocalDataType).RunSynchronously();
         }
-
-        /// <summary>
-        /// For backward compatibility
-        /// </summary>
-        public static void Publish<T>(string apiEndpoint, T data)
-        {
-            Publish(apiEndpoint,data, DevLocalDataType.Build);
-        }
     }
 }

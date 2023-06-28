@@ -50,7 +50,7 @@ namespace Agoda.Builds.Metrics
                     gitContext: gitContext
                 );
 
-                DevFeedbackPublisher.Publish(ApiEndPoint, data);
+                DevFeedbackPublisher.Publish(ApiEndPoint, data, DevLocalDataType.NUnit);
             }
             catch (GitContextException ex)
             {
