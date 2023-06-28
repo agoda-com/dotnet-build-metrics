@@ -13,7 +13,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Agoda.Tests.Metrics.NUnit",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Agoda.Tests.Metrics.NUnit.Tests", "Agoda.Tests.Metrics.NUnit.Tests\Agoda.Tests.Metrics.NUnit.Tests.csproj", "{C3FD34EE-C8E1-4A48-885D-1E9AC37B3561}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Agoda.DevFeedback.Common.Tests", "Agoda.DevFeedback.CommonTests\Agoda.DevFeedback.Common.Tests.csproj", "{A78ACD7D-E485-4FAE-8669-D6A672CF6D3E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Agoda.DevFeedback.Common.Tests", "Agoda.DevFeedback.CommonTests\Agoda.DevFeedback.Common.Tests.csproj", "{A78ACD7D-E485-4FAE-8669-D6A672CF6D3E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Agoda.Tests.Metrics.xUnit", "Agoda.Tests.Metrics.xUnit\Agoda.Tests.Metrics.xUnit.csproj", "{449942D5-1D87-42A9-A74F-0BA5FB9FAC97}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Agoda.Tests.Metrics.Tests", "Agoda.Tests.Metrics.Tests\Agoda.Tests.Metrics.Tests.csproj", "{80645931-22CF-4A46-B965-544E7B5D7855}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Agoda.Tests.Metrics.xUnit.Tests", "Agoda.Tests.MEtrics.xUnit.Tests\Agoda.Tests.Metrics.xUnit.Tests.csproj", "{66B8CAFD-5EB6-4FF4-B2F5-6D9CE0A71396}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Agoda.Tests.Metrics", "Agoda.Tests.Metrics\Agoda.Tests.Metrics.csproj", "{BF73DA9B-5802-4481-BF27-55ACF995E04B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +53,22 @@ Global
 		{A78ACD7D-E485-4FAE-8669-D6A672CF6D3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A78ACD7D-E485-4FAE-8669-D6A672CF6D3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A78ACD7D-E485-4FAE-8669-D6A672CF6D3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{449942D5-1D87-42A9-A74F-0BA5FB9FAC97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{449942D5-1D87-42A9-A74F-0BA5FB9FAC97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{449942D5-1D87-42A9-A74F-0BA5FB9FAC97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{449942D5-1D87-42A9-A74F-0BA5FB9FAC97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80645931-22CF-4A46-B965-544E7B5D7855}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80645931-22CF-4A46-B965-544E7B5D7855}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80645931-22CF-4A46-B965-544E7B5D7855}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80645931-22CF-4A46-B965-544E7B5D7855}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66B8CAFD-5EB6-4FF4-B2F5-6D9CE0A71396}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66B8CAFD-5EB6-4FF4-B2F5-6D9CE0A71396}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66B8CAFD-5EB6-4FF4-B2F5-6D9CE0A71396}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66B8CAFD-5EB6-4FF4-B2F5-6D9CE0A71396}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF73DA9B-5802-4481-BF27-55ACF995E04B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF73DA9B-5802-4481-BF27-55ACF995E04B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF73DA9B-5802-4481-BF27-55ACF995E04B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF73DA9B-5802-4481-BF27-55ACF995E04B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

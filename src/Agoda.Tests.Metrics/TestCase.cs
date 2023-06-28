@@ -3,8 +3,12 @@ using System.Globalization;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace Agoda.Tests.Metrics.NUnit
+namespace Agoda.Tests.Metrics
 {
+    /// <summary>
+    /// NUnit TestCase schema as reported by events.
+    /// https://docs.nunit.org/articles/nunit/technical-notes/usage/Test-Result-XML-Format.html#test-case
+    /// </summary>
     [XmlRoot(ElementName = "test-case")]
     public class TestCase
     {

@@ -20,7 +20,7 @@ namespace Agoda.DevFeedback.Common
                 case DevLocalDataType.Build:
                     targetEndpoint = GetApiEndpoint(apiEndpoint);
                     break;
-                case DevLocalDataType.NUint:
+                case DevLocalDataType.NUnit:
                     targetEndpoint = GetNunitApiEndpoint(apiEndpoint);
                     break;
                 default:
@@ -29,10 +29,8 @@ namespace Agoda.DevFeedback.Common
             using (var httpClient = new HttpClient())
             {
                 httpClient.Timeout = TimeSpan.FromSeconds(2);
-
                 var content = new StringContent(JsonSerializer.Serialize(data), Encoding.UTF8, "application/json");
                 var response = httpClient.PostAsync(targetEndpoint, content).Result;
-
                 response.EnsureSuccessStatusCode();
             }
         }
