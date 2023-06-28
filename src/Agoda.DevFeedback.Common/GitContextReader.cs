@@ -21,6 +21,7 @@ namespace Agoda.DevFeedback.Common
                 throw new GitContextException("Unable to get git branch.");
             }
 
+            url = CleanGitlabCIToken(url);
             return new GitContext
             {
                 RepositoryUrl = url,
@@ -42,6 +43,7 @@ namespace Agoda.DevFeedback.Common
                     WorkingDirectory = Environment.CurrentDirectory,
                     RedirectStandardInput = true,
                     RedirectStandardOutput = true,
+                    RedirectStandardError = true,
                     Arguments = args
                 }
             };
@@ -58,13 +60,22 @@ namespace Agoda.DevFeedback.Common
             return process.StandardOutput.ReadLine();
         }
 
-        static string GetRepositoryNameFromUrl(string url)
+        internal static string GetRepositoryNameFromUrl(string url)
         {
             var repositoryName = url.Substring(url.LastIndexOf('/') + 1);
 
             return repositoryName.EndsWith(".git")
                 ? repositoryName.Substring(0, repositoryName.LastIndexOf('.'))
                 : repositoryName;
+        }
+
+        internal static string CleanGitlabCIToken(string url)
+        {
+            if (url.Contains("@") && url.StartsWith("https"))
+            {
+                url = "https://" + url.Split('@')[1];
+            }
+            return url;
         }
     }
 }

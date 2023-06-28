@@ -35,6 +35,7 @@ namespace Agoda.DevFeedback.Common
                 apiEndpoint = Environment.GetEnvironmentVariable(endpointInfo[1]);
             }
             return string.IsNullOrEmpty(apiEndpoint) ? $"{BASE_URL}{endpointInfo[0]}" : apiEndpoint;
+                case DevLocalDataType.NUnit:
         }
 
         /// <summary>
@@ -46,7 +47,6 @@ namespace Agoda.DevFeedback.Common
             using (var httpClient = new HttpClient())
             {
                 httpClient.Timeout = TimeSpan.FromSeconds(2);
-
                 var content = new StringContent(JsonSerializer.Serialize(data), Encoding.UTF8, "application/json");
                 var response = await httpClient.PostAsync(targetEndpoint, content);
                 response.EnsureSuccessStatusCode();

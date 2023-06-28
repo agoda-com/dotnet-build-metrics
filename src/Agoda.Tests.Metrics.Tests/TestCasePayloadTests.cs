@@ -1,17 +1,16 @@
 ﻿using Agoda.DevFeedback.Common;
 using NSubstitute;
-using NUnit.Framework;
 using Shouldly;
 
-namespace Agoda.Tests.Metrics.NUnit.Tests;
+namespace Agoda.Tests.Metrics.Tests;
 
 [TestFixture]
-public class NUnitTestCasePayloadTests
+public class TestCasePayloadTests
 {
     [Test]
     public void WhenInit_ShouldHaveDefaultVarsFromEnvironment()
     {
-        var underTest = new NUnitTestCasePayload(null,Substitute.For<GitContext>(), new List<TestCase>());
+        var underTest = new TestCasePayload(null,Substitute.For<GitContext>(), new List<TestCase>());
 
         underTest.Id.ShouldNotBeNull();
         underTest.UserName.ShouldBe(Environment.UserName);

@@ -24,12 +24,12 @@ namespace Agoda.Tests.Metrics.NUnit
 
                 var gitContext = GitContextReader.GetGitContext();
 
-                var data = new NUnitTestCasePayload(
+                var data = new TestCasePayload(
                     typeof(AgodaNUnitEventListener).Assembly.GetName().Version.ToString(),
                     gitContext,
                     xmlConverter.TestCases
                 );
-                DevFeedbackPublisher.Publish(null, data, DevLocalDataType.NUint);
+                DevFeedbackPublisher.Publish(null, data, DevLocalDataType.NUnit);
             }
             catch (Exception e)
             {

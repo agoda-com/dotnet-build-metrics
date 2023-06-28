@@ -3,6 +3,6 @@
     public enum DevLocalDataType
     {
         Build,
-        NUint
+        NUnit
     }
 }

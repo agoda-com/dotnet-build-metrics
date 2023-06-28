@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Agoda.Testinglib.addins" >
+    <Content Include="Agoda.Testinglib.addins">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  <PackageCopyToOutput>true</PackageCopyToOutput>
 	</Content>
@@ -26,5 +26,6 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\Agoda.DevFeedback.Common\Agoda.DevFeedback.Common.csproj" />
+	  <ProjectReference Include="..\Agoda.Tests.Metrics\Agoda.Tests.Metrics.csproj" />
 	</ItemGroup>
 </Project>

@@ -42,8 +42,8 @@ public class NUnitTestCaseConverterTests
 				</test-suite>
 				<test-suite type=""TestSuite"" id=""0-1005"" name=""Tests"" fullname=""Agoda.TestingLib.Tests2"" runstate=""Runnable"" testcasecount=""1"" result=""Passed"" start-time=""2023-03-26T05:43:46.8073083Z"" end-time=""2023-03-26T05:43:46.8464343Z"" duration=""0.039127"" total=""1"" passed=""1"" failed=""0"" warnings=""0"" inconclusive=""0"" skipped=""0"" asserts=""0"">
 					<test-suite type=""TestFixture"" id=""0-1000"" name=""UnitTest1"" fullname=""Agoda.TestingLib.Tests.UnitTest2"" classname=""Agoda.TestingLib.Tests.UnitTest1"" runstate=""Runnable"" testcasecount=""1"" result=""Passed"" start-time=""2023-03-26T05:43:46.8073115Z"" end-time=""2023-03-26T05:43:46.8460458Z"" duration=""0.038735"" total=""1"" passed=""1"" failed=""0"" warnings=""0"" inconclusive=""0"" skipped=""0"" asserts=""0"">
-						<test-case id=""0-1003"" name=""3WhenOneIsOne_ItSHouldBeOne"" fullname=""Agoda.TestingLib.Tests.UnitTest2.3WhenOneIsOne_ItSHouldBeOne"" methodname=""WhenOneIsOne_ItSHouldBeOne"" classname=""Agoda.TestingLib.Tests.UnitTest1"" runstate=""Runnable"" seed=""396657978"" result=""Passed"" start-time=""2023-03-26T05:43:46.8096530Z"" end-time=""2023-03-26T05:43:46.8428099Z"" duration=""0.033255"" asserts=""0"" />
-						<test-case id=""0-1004"" name=""4WhenOneIsOne_ItSHouldBeOne"" fullname=""Agoda.TestingLib.Tests.UnitTest2.4WhenOneIsOne_ItSHouldBeOne"" methodname=""WhenOneIsOne_ItSHouldBeOne"" classname=""Agoda.TestingLib.Tests.UnitTest1"" runstate=""Runnable"" seed=""396657978"" result=""Passed"" start-time=""2023-03-26T05:43:46.8096530Z"" end-time=""2023-03-26T05:43:46.8428099Z"" duration=""0.033255"" asserts=""0"" />
+						<test-case id=""0-1003"" name=""3WhenOneIsOne_ItSHouldBeOne"" fullname=""Agoda.TestingLib.Tests.UnitTest2.3WhenOneIsOne_ItSHouldBeOne"" methodname=""WhenOneIsOne_ItSHouldBeOne"" classname=""Agoda.TestingLib.Tests.UnitTest1"" runstate=""Runnable"" seed=""396657978"" result=""Passed"" start-time=""2023-03-26 05:43:46.8096530"" end-time=""2023-03-26 05:43:46.8428099"" duration=""0.033255"" asserts=""0"" />
+						<test-case id=""0-1004"" name=""4WhenOneIsOne_ItSHouldBeOne"" fullname=""Agoda.TestingLib.Tests.UnitTest2.4WhenOneIsOne_ItSHouldBeOne"" methodname=""WhenOneIsOne_ItSHouldBeOne"" classname=""Agoda.TestingLib.Tests.UnitTest1"" runstate=""Runnable"" seed=""396657978"" result=""Passed"" start-time=""2023-03-26 05:43:46.8096530"" end-time=""2023-03-26 05:43:46.8428099"" duration=""0.033255"" asserts=""0"" />
 					</test-suite>
 				</test-suite>
 
@@ -54,13 +54,17 @@ public class NUnitTestCaseConverterTests
 ";
         var result = new NUnitXmlEventConverter(report);
 		result.TestCases.Count.ShouldBe(4);
+		
         for (int i = 1; i <= 4; i++)
         {
             result.TestCases[i - 1].Name.ShouldBe($"{i}WhenOneIsOne_ItSHouldBeOne",customMessage:$"Name on {i}");
             result.TestCases[i - 1].Id.ShouldBe($"0-100{i}", customMessage: $"Id on {i}");
             result.TestCases[i - 1].Fullname.ShouldBe($"Agoda.TestingLib.Tests.UnitTest{(i+1) / 2}.{i}WhenOneIsOne_ItSHouldBeOne", customMessage: $"Fullname on {i}");
 			result.TestCases[i - 1].Duration.ShouldBe(0.033255, customMessage: $"Duration on {i}");
+			result.TestCases[i - 1].Duration.ShouldBe(0.033255, customMessage: $"Duration on {i}");
+			
+			var duration = (result.TestCases[i - 1].EndTime - result.TestCases[i - 1].StartTime).TotalSeconds;
+			duration.ShouldBe(0.0331569, customMessage: $"Duration on {i}");
         }
-		
     }
 }
