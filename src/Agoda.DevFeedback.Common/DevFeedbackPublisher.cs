@@ -1,60 +1,63 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace Agoda.DevFeedback.Common
 {
     public static class DevFeedbackPublisher
     {
-        public static void Publish<T>(string apiEndpoint, T data)
+        /// <summary>
+        /// Data data type to endpoints
+        /// </summary>
+        private static Dictionary<DevLocalDataType, List<string>> _dataTypeEndpoints = new Dictionary<DevLocalDataType, List<string>>()
         {
-            Publish(apiEndpoint,data, DevLocalDataType.Build);
+            { DevLocalDataType.Build, new List<string>() { "dotnet", "BUILD_METRICS_ES_ENDPOINT" } },
+            { DevLocalDataType.NUnit, new List<string>() { "dotnet/nunit", "NUNIT_METRICS_ES_ENDPOINT" } }
+        };
+
+        // Default URL
+        private const string BASE_URL = "http://compilation-metrics/";
+
+        /// <summary>
+        /// Get the endpoint to use with a specific data source.
+        /// </summary>
+        private static string GetApiEndpoint(DevLocalDataType dataType, string apiEndpoint)
+        {
+            _dataTypeEndpoints.TryGetValue(dataType, out var endpointInfo);
+            if (endpointInfo == null)
+                throw new ArgumentOutOfRangeException(nameof(dataType), dataType, null);
+            // Fetch from environment if not manually provided
+            if (string.IsNullOrEmpty(apiEndpoint))
+            {
+                apiEndpoint = Environment.GetEnvironmentVariable(endpointInfo[1]);
+            }
+            return string.IsNullOrEmpty(apiEndpoint) ? $"{BASE_URL}{endpointInfo[0]}" : apiEndpoint;
         }
 
-        public static void Publish<T>(string apiEndpoint, T data, DevLocalDataType devLocalDataType)
+        /// <summary>
+        /// Publish the data as JSON to the appropriate endpoint
+        /// </summary>
+        public static async Task PublishAsync(string apiEndpoint, object data, DevLocalDataType devLocalDataType)
         {
-            var targetEndpoint = string.Empty;
-            switch (devLocalDataType)
-            {
-                case DevLocalDataType.Build:
-                    targetEndpoint = GetApiEndpoint(apiEndpoint);
-                    break;
-                case DevLocalDataType.NUnit:
-                    targetEndpoint = GetNunitApiEndpoint(apiEndpoint);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(devLocalDataType), devLocalDataType, null);
-            }
+            var targetEndpoint = GetApiEndpoint(devLocalDataType, apiEndpoint);
             using (var httpClient = new HttpClient())
             {
                 httpClient.Timeout = TimeSpan.FromSeconds(2);
                 var content = new StringContent(JsonSerializer.Serialize(data), Encoding.UTF8, "application/json");
-                var response = httpClient.PostAsync(targetEndpoint, content).Result;
+                var response = await httpClient.PostAsync(targetEndpoint, content);
                 response.EnsureSuccessStatusCode();
             }
         }
 
-        private const string BASE_URL = "http://compilation-metrics/";
-        //private const string BASE_URL = "http://localhost:5000/";
-        static string GetApiEndpoint(string apiEndpoint)
+        /// <summary>
+        /// Non-async version of publish
+        /// </summary>
+        public static void Publish(string apiEndpoint, object data, DevLocalDataType devLocalDataType)
         {
-            if (string.IsNullOrEmpty(apiEndpoint))
-            {
-                apiEndpoint = Environment.GetEnvironmentVariable("BUILD_METRICS_ES_ENDPOINT");
-            }
-
-            return string.IsNullOrEmpty(apiEndpoint) ? $"{BASE_URL}dotnet" : apiEndpoint;
-        }
-
-        static string GetNunitApiEndpoint(string apiEndpoint)
-        {
-            if (string.IsNullOrEmpty(apiEndpoint))
-            {
-                apiEndpoint = Environment.GetEnvironmentVariable("NUNIT_METRICS_ES_ENDPOINT");
-            }
-
-            return string.IsNullOrEmpty(apiEndpoint) ? $"{BASE_URL}dotnet/nunit" : apiEndpoint;
+            PublishAsync(apiEndpoint, data, devLocalDataType).Wait();
         }
     }
 }
