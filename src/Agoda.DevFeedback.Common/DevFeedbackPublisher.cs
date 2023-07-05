@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace Agoda.DevFeedback.Common
 {
@@ -46,7 +46,7 @@ namespace Agoda.DevFeedback.Common
             using (var httpClient = new HttpClient())
             {
                 httpClient.Timeout = TimeSpan.FromSeconds(2);
-                var content = new StringContent(JsonSerializer.Serialize(data), Encoding.UTF8, "application/json");
+                var content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
                 var response = await httpClient.PostAsync(targetEndpoint, content);
                 response.EnsureSuccessStatusCode();
             }
