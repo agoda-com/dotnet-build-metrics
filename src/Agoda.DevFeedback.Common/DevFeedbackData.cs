@@ -1,50 +1,50 @@
 ﻿using System;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace Agoda.DevFeedback.Common
 {
     public class DevFeedbackData
     {
-        [JsonPropertyName("id")]
+        [JsonProperty("id")]
         public Guid Id { get; set; }
         
-        [JsonPropertyName("metricsVersion")]
+        [JsonProperty("metricsVersion")]
         public string MetricsVersion { get; set; }
         
-        [JsonPropertyName("userName")]
+        [JsonProperty("userName")]
         public string UserName { get; set; }
         
-        [JsonPropertyName("cpuCount")]
+        [JsonProperty("cpuCount")]
         public int CpuCount { get; set; }
         
-        [JsonPropertyName("hostname")]
+        [JsonProperty("hostname")]
         public string Hostname { get; set; }
         
-        [JsonPropertyName("platform")]
+        [JsonProperty("platform")]
         public PlatformID Platform { get; set; }
         
-        [JsonPropertyName("os")]
+        [JsonProperty("os")]
         public string Os { get; set; }
         
-        [JsonPropertyName("timeTaken")]
+        [JsonProperty("timeTaken")]
         public string TimeTaken { get; set; }
         
-        [JsonPropertyName("branch")]
+        [JsonProperty("branch")]
         public string Branch { get; set; }
         
-        [JsonPropertyName("type")]
+        [JsonProperty("type")]
         public string Type { get; set; }
         
-        [JsonPropertyName("projectName")]
+        [JsonProperty("projectName")]
         public string ProjectName { get; set; }
         
-        [JsonPropertyName("repository")]
+        [JsonProperty("repository")]
         public string Repository { get; set; }
         
-        [JsonPropertyName("repositoryName")]
+        [JsonProperty("repositoryName")]
         public string RepositoryName { get; set; }
         
-        [JsonPropertyName("date")]
+        [JsonProperty("date")]
         public DateTime Date { get; set; }
 
         public DevFeedbackData(
