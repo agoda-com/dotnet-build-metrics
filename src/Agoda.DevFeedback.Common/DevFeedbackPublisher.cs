@@ -45,7 +45,6 @@ namespace Agoda.DevFeedback.Common
             var targetEndpoint = GetApiEndpoint(devLocalDataType, apiEndpoint);
             using (var httpClient = new HttpClient())
             {
-                httpClient.Timeout = TimeSpan.FromSeconds(2);
                 var content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
                 var response = await httpClient.PostAsync(targetEndpoint, content);
                 response.EnsureSuccessStatusCode();
