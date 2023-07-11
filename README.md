@@ -2,7 +2,10 @@
 
 ## Overview
 
-Dotnet Build Metrics is a custom MSBuild task that measures the time to build each project and publishes the information to a datastore. The intent is to measure and improve developer experience on local workstations.
+Dotnet Build Metrics is an enhanced MSBuild task that measures the time to build each project and storing the information in a datastore. 
+It now includes additional functionalities, such as **monitoring web server startup time and collecting test data within the repository.**
+
+The objective is centered around measuring and improving the overall developer F5 experience on local workstations.
 
 **_The tool collects username and hostname as a part of build information. [See example payload](#data-sent-to-the-datastore)_**
 
