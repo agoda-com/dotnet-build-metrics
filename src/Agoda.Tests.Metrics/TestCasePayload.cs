@@ -26,15 +26,8 @@ namespace Agoda.Tests.Metrics
             Branch = gitContext.BranchName;
             NUnitTestCases = testCases.ToList();
             IsDebuggerAttached = System.Diagnostics.Debugger.IsAttached;
-            var ciJobId = Environment.GetEnvironmentVariable("CI_JOB_ID");
-            if (!string.IsNullOrEmpty(ciJobId))
-            {
-                RunId = ciJobId;
-            }
-            else
-            {
-                RunId = Guid.NewGuid().ToString();
-            }
+            var ciJobId = Environment.GetEnvironmentVariable("CI_JOB_ID");  
+            RunId = string.IsNullOrEmpty(ciJobId) ? Guid.NewGuid().ToString() : ciJobId;
         }
 
         public bool IsDebuggerAttached { get; set; }
