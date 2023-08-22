@@ -20,5 +20,6 @@ public class TestCasePayloadTests
 #pragma warning restore AG0035
         underTest.Platform.ShouldBe((int)Environment.OSVersion.Platform);
         underTest.Os.ShouldBe(Environment.OSVersion.VersionString);
+        underTest.RunId.ShouldNotBeNull();
     }
 }
