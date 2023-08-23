@@ -9,8 +9,8 @@ namespace Agoda.DevFeedback.Common
         public static GitContext GetGitContext()
         {
             string url = RunCommand("config --get remote.origin.url");
-            string branch = RunCommand("rev-parse --abbrev-ref HEAD");
-
+            string branch = Environment.GetEnvironmentVariable("CI_COMMIT_REF_NAME") ?? RunCommand("rev-parse --abbrev-ref HEAD");
+              
             if (string.IsNullOrEmpty(url))
             {
                 throw new GitContextException("Unable to get git remote url.");
