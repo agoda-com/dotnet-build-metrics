@@ -1,0 +1,14 @@
+{
+    "id": "026fe42b-7888-4a76-81ee-2ab431ae4987",
+    "userName": "aanand",
+    "cpuCount": 12,
+    "hostname": "25BVM13",
+    "platform": 2,
+    "os": "Microsoft Windows NT 10.0.19042.0",
+    "timeTaken": "453",
+    "branch": "master",
+    "type": ".Net",
+    "projectName": "Agoda.Cronos.Accommodation",
+    "repository": "git@github.xxxx.io:front-end/dotnet-build-metrics.git",
+    "date": "2021-06-28T02:53:22.1420552Z"
+}

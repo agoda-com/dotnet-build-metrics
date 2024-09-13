@@ -30,6 +30,8 @@ Pro tip: Set up a CNAME on your internal DNS servers for `compilation-metrics`. 
 
 ### Agoda.DevFeedback.AspNetStartup: Because Startup Time Matters
 
+Why does startup time matter? read more [here](https://beerandserversdontmix.com/2024/08/15/the-f5-experience-local-setup/).
+
 This package measures your ASP.NET application's startup time in two exciting flavors:
 
 1. From `WebHostBuilder ConfigureServices` until `HostApplicationLifetime OnStarted` (type '.AspNetStartup')
