@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 namespace Agoda.DevFeedback.AspNetStartup
@@ -10,27 +11,20 @@ namespace Agoda.DevFeedback.AspNetStartup
     {
         public static void Publish(string type, TimeSpan timeTaken)
         {
+            const string TagPrefix = "DEVFEEDBACK_TAG_";
+
             var gitContext = GitContextReader.GetGitContext();
 
-            var tags = new Dictionary<string, string>();
-            const string TAG_PREFIX = "DEVFEEDBACK_TAG_";
-
-            // Get all environment variables and filter for ones starting with DEVFEEDBACK_TAG_
-            foreach (DictionaryEntry de in Environment.GetEnvironmentVariables())
-            {
-                string key = de.Key.ToString();
-                if (key.StartsWith(TAG_PREFIX, StringComparison.OrdinalIgnoreCase))
-                {
-                    // Remove the prefix to get the clean tag name
-                    string tagName = key.Substring(TAG_PREFIX.Length).ToLowerInvariant();
-                    string tagValue = de.Value?.ToString() ?? string.Empty;
-
-                    if (!string.IsNullOrEmpty(tagValue))
-                    {
-                        tags.Add(tagName, tagValue);
-                    }
-                }
-            }
+            // Use LINQ and dictionary comprehension for cleaner tag collection
+            var tags = Environment.GetEnvironmentVariables()
+                .Cast<DictionaryEntry>()
+                .Select(entry => (Key: entry.Key.ToString()!, Value: entry.Value?.ToString()))
+                .Where(entry => entry.Key.StartsWith(TagPrefix, StringComparison.OrdinalIgnoreCase)
+                                && !string.IsNullOrEmpty(entry.Value))
+                .ToDictionary(
+                    entry => entry.Key[TagPrefix.Length..].ToLowerInvariant(),
+                    entry => entry.Value!
+                );
 
             var result = new DevFeedbackData(
                 metricsVersion: Assembly.GetExecutingAssembly().GetName().Version?.ToString(),
