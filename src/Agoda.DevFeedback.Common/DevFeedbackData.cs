@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace Agoda.DevFeedback.Common
@@ -47,13 +48,16 @@ namespace Agoda.DevFeedback.Common
         [JsonProperty("date")]
         public DateTime Date { get; set; }
 
+        [JsonProperty("tags")]
+        public Dictionary<string,string> Tags { get; set; }
+
         public DevFeedbackData(
             string metricsVersion,
             string type,
             string projectName,
             string timeTaken,
-            GitContext gitContext
-        )
+            GitContext gitContext,
+            Dictionary<string,string> tags = null)
         {
             Id = Guid.NewGuid();
             Type = type;
@@ -69,6 +73,7 @@ namespace Agoda.DevFeedback.Common
             RepositoryName = gitContext.RepositoryName;
             Branch = gitContext.BranchName;
             Date = DateTime.UtcNow;
+            Tags = tags;
         }
     }
 }
