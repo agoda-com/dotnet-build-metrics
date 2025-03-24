@@ -17,9 +17,9 @@ jobs:
     runs-on: windows-latest # using windows agent for net472 build.
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: Setup .NET Core SDK ${{ env.NETCORE_VERSION }}
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: ${{ env.NETCORE_VERSION }}
 
@@ -61,14 +61,8 @@ jobs:
           name: nupkg
           path: ./nupkg
 
-      - name: Setup NuGet
-        uses: NuGet/setup-nuget@v1.0.5
-        with:
-          nuget-api-key: ${{ secrets.KLONDIKE_API_KEY }}
-          nuget-version: latest
-
       - name: Setup .NET Core SDK
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: ${{ env.NETCORE_VERSION }}
           
