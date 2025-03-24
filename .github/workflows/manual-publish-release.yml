@@ -62,13 +62,13 @@ jobs:
           path: ./nupkg
 
       - name: Setup NuGet
-        uses: NuGet/setup-nuget@v1.0.5
+        uses: NuGet/setup-nuget@v2
         with:
           nuget-api-key: ${{ secrets.KLONDIKE_API_KEY }}
           nuget-version: latest
 
       - name: Setup .NET Core SDK
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: ${{ env.NETCORE_VERSION }}
           
