@@ -51,6 +51,9 @@ namespace Agoda.DevFeedback.Common
         [JsonProperty("tags")]
         public Dictionary<string,string> Tags { get; set; }
 
+        [JsonProperty("isDebuggerAttached")]
+        public bool IsDebuggerAttached { get; set; }
+
         public DevFeedbackData(
             string metricsVersion,
             string type,
@@ -74,6 +77,8 @@ namespace Agoda.DevFeedback.Common
             Branch = gitContext.BranchName;
             Date = DateTime.UtcNow;
             Tags = tags;
+            IsDebuggerAttached = System.Diagnostics.Debugger.IsAttached;
         }
+
     }
 }
