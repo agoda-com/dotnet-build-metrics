@@ -48,7 +48,14 @@ You can set these in your `launchSettings.json`. It's like leaving a note for yo
 
 We've got packages for both `xUnit` and `NUnit`. They're like personal trainers for your tests!
 
-These packages will POST their data to `http://compilation-metrics/dotnet/nunit` (or wherever `BUILD_METRICS_ES_ENDPOINT` points to). See exampel payload [here](examples/dotnettests.json).
+These packages will POST their data to `http://compilation-metrics/dotnet/nunit` (or wherever `NUNIT_METRICS_ES_ENDPOINT` points to). See exampel payload [here](examples/dotnettests.json).
+
+| Parameter     | Environment Variable      | Default Value                           |
+|---------------|---------------------------|-----------------------------------------|
+| Endpoint      | NUNIT_METRICS_ES_ENDPOINT | http://compilation-metrics/dotnet/nunit |
+| Access token  | DEVFEEDBACK_TEST_TOKEN    | (none)                                  |
+
+If `DEVFEEDBACK_TEST_TOKEN` is set, test reports send it in an `X-DevFeedback-Token` header, so a proxy in front of the endpoint can let them in from outside your network. Leave it unset or empty and no header is sent. Build metrics never send it.
 
 To install, just run:
 
