@@ -1,0 +1,47 @@
+{
+    "id": "12345",
+    "userName": "john.doe",
+    "cpuCount": 8,
+    "hostname": "test-server",
+    "platform": 1,
+    "os": "Windows 10",
+    "branch": "feature/new-test-case",
+    "projectName": "SampleProject",
+    "repository": "https://github.com/example/sample-repo",
+    "repositoryName": "sample-repo",
+    "isDebuggerAttached": true,
+    "nUnitTestCases": [
+      {
+        "id": "test-001",
+        "name": "Test_Addition",
+        "fullname": "SampleProject.Tests.MathTests.Test_Addition",
+        "methodname": "Test_Addition",
+        "classname": "MathTests",
+        "runstate": "Runnable",
+        "seed": 123456,
+        "result": "Passed",
+        "startTime": "2024-09-13T10:30:00Z",
+        "endTime": "2024-09-13T10:30:05Z",
+        "duration": 5.0,
+        "asserts": 1,
+        "parentId": "root-001"
+      },
+      {
+        "id": "test-002",
+        "name": "Test_Subtraction",
+        "fullname": "SampleProject.Tests.MathTests.Test_Subtraction",
+        "methodname": "Test_Subtraction",
+        "classname": "MathTests",
+        "runstate": "Ignored",
+        "seed": 654321,
+        "result": "Skipped",
+        "startTime": "2024-09-13T10:35:00Z",
+        "endTime": "2024-09-13T10:35:00Z",
+        "duration": 0.0,
+        "asserts": 0,
+        "parentId": "root-002"
+      }
+    ],
+    "runId": "run-67890"
+  }
+  
