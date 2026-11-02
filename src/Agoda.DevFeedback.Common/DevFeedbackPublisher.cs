@@ -21,6 +21,9 @@ namespace Agoda.DevFeedback.Common
         // Default URL
         private const string BASE_URL = "http://compilation-metrics/";
 
+        private const string TEST_TOKEN_ENV_VAR = "DEVFEEDBACK_TEST_TOKEN";
+        private const string TEST_TOKEN_HEADER = "X-DevFeedback-Token";
+
         /// <summary>
         /// Get the endpoint to use with a specific data source.
         /// </summary>
@@ -44,11 +47,27 @@ namespace Agoda.DevFeedback.Common
         {
             var targetEndpoint = GetApiEndpoint(devLocalDataType, apiEndpoint);
             using (var httpClient = new HttpClient())
+            using (var request = new HttpRequestMessage(HttpMethod.Post, targetEndpoint))
             {
-                var content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
-                var response = await httpClient.PostAsync(targetEndpoint, content);
+                request.Content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
+                AddTestTokenHeader(request, devLocalDataType);
+                var response = await httpClient.SendAsync(request);
                 response.EnsureSuccessStatusCode();
             }
+        }
+
+        /// <summary>
+        /// Test reports carry the token from DEVFEEDBACK_TEST_TOKEN, when it is set, so a proxy can let them in.
+        /// Build metrics never read or send it.
+        /// </summary>
+        private static void AddTestTokenHeader(HttpRequestMessage request, DevLocalDataType devLocalDataType)
+        {
+            if (devLocalDataType != DevLocalDataType.NUnit)
+                return;
+            var token = Environment.GetEnvironmentVariable(TEST_TOKEN_ENV_VAR);
+            if (string.IsNullOrWhiteSpace(token))
+                return;
+            request.Headers.TryAddWithoutValidation(TEST_TOKEN_HEADER, token);
         }
 
         /// <summary>
