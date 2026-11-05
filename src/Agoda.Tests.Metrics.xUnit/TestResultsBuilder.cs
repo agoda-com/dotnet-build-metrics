@@ -50,7 +50,14 @@ namespace Agoda.Tests.Metrics.xUnit
                         _testResults
                         );
                 // Publish it
-                DevFeedbackPublisher.Publish(null, payload, DevLocalDataType.NUnit);
+                try
+                {
+                    DevFeedbackPublisher.Publish(null, payload, DevLocalDataType.NUnit);
+                }
+                catch (Exception e)
+                {
+                    Diagnostic($"Failed to publish test metrics: {e.Message}");
+                }
             }
         }
 
