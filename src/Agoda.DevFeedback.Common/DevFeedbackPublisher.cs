@@ -49,6 +49,7 @@ namespace Agoda.DevFeedback.Common
             using (var httpClient = new HttpClient())
             using (var request = new HttpRequestMessage(HttpMethod.Post, targetEndpoint))
             {
+                httpClient.Timeout = TimeSpan.FromSeconds(5);
                 request.Content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
                 AddTestTokenHeader(request, devLocalDataType);
                 var response = await httpClient.SendAsync(request);

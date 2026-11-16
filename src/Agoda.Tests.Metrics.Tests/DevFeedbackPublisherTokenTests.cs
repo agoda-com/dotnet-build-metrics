@@ -66,6 +66,21 @@ public class DevFeedbackPublisherTokenTests
         headers.GetValues(TokenHeader).ShouldBeNull();
     }
 
+    [Test]
+    public async Task PublishAsync_WhenEndpointDoesNotRespond_TimesOut()
+    {
+        var publish = DevFeedbackPublisher.PublishAsync(_endpoint, new { }, DevLocalDataType.Build);
+        var context = await _listener.GetContextAsync().WaitAsync(TimeSpan.FromSeconds(10));
+        try
+        {
+            Assert.ThrowsAsync<TaskCanceledException>(async () => await publish.WaitAsync(TimeSpan.FromSeconds(15)));
+        }
+        finally
+        {
+            context.Response.Close();
+        }
+    }
+
     private async Task<System.Collections.Specialized.NameValueCollection> PublishAndCaptureHeaders(DevLocalDataType dataType)
     {
         var received = ReceiveOne();
